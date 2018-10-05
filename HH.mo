@@ -19,8 +19,8 @@ model HH
   parameter Real alphah0 (unit="1/msec") = 0.07;
   parameter Real betah0  (unit="1/msec") = 1/(exp(3)+1);
 
-  Real minusI(unit = "uA/cm2");
-  Real Vclamp(unit = "mV");
+  parameter Real minusI(unit = "uA/cm2") = 40;
+  input Real Vclamp(unit = "mV");
 
   parameter Real clamp_0no_1yes = 0;
 
@@ -61,18 +61,18 @@ initial equation
   h = alphah0/(alphah0+betah0);
 
 equation
-  if V/Vnorm == -10 then
-    alphan = 0.1;
-  else
-    alphan = 0.01*(V/Vnorm+10)/(exp((V/Vnorm+10)/10)-1);
-  end if;
-  betan   = msecm1*(0.125*exp((V/Vnorm)/80));
-  if V/Vnorm == -25 then
-    alpham = 1;
-  else
-    alpham = 0.1*(V/Vnorm+25)/(exp((V/Vnorm+25)/10)-1);
-  end if;
-  betam   = msecm1*(4*exp((V/Vnorm)/18));
+  //if V/Vnorm == -10 then
+  //  alphan = 0.1;
+  //else
+  alphan = 0.01 * (V / Vnorm + 10) / (exp((V / Vnorm + 10) / 10) - 1);
+  //end if;
+  betan = msecm1 * (0.125 * exp(V / Vnorm / 80));
+  //if V/Vnorm == -25 then
+  //  alpham = 1;
+  //else
+  alpham = 0.1 * (V / Vnorm + 25) / (exp((V / Vnorm + 25) / 10) - 1);
+  //end if;
+  betam = msecm1 * (4 * exp(V / Vnorm / 18));
   alphah  = msecm1*(0.07*exp((V/Vnorm)/20));
   betah   = msecm1*(1/(exp(( V/Vnorm+30)/10)+1));
   minf    = alpham/(alpham+betam);
@@ -97,4 +97,5 @@ equation
   der(n) = phi*(alphan*(1-n)-betan*n);
   der(m) = phi*(alpham*(1-m)-betam*m);
   der(h) = phi*(alphah*(1-h)-betah*h);
-end HH;
+annotation(
+    experiment(StartTime = 0, StopTime = 30000, Tolerance = 1e-6, Interval = 0.01));end HH;
