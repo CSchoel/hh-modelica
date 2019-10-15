@@ -46,7 +46,7 @@ package Modular
     Real G "conductance";
     input Real V "actual potential (as displacement from resting potential)";
     parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
-    parameter Real gate_max "maximum conductance";
+    parameter Real G_max "maximum conductance";
   equation
     I = G * (V - V_eq);
   end IonChannel;
