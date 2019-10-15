@@ -81,7 +81,7 @@ package Modular
     Real V;
     Real I_total;
     Real I = 40; // TODO: explain
-    parameter Real C;
+    parameter Real C = 1;
   equation
     I_total = c_pot.I + c_sod.I + c_leak.I - I;
     der(V) = -I_total / C;
