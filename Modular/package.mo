@@ -1,6 +1,5 @@
 within HHmodelica;
 package Modular
-  // TODO: starting values
   function scaledExpFit
     input Real x "input value";
     input Real sx "scaling factor for x axis";
@@ -35,11 +34,12 @@ package Modular
     res := 1 / (exp(V_adj) + 1);
   end inactivationFit;
   model Gate
-    Real n "ratio of molecules in 'open' position";
-    input Real alpha "rate of transfer from closed to open position";
-    input Real beta "rate of transfer from open to closed position";
+    replaceable function falpha = goldmanFit(V_off=0, sres=1, sV=1) "rate of transfer from closed to open position";
+    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed position";
+    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in 'open' position";
+    input Real V;
   equation
-    der(n) = alpha * (1 - n) - beta * n;
+    der(n) = falpha(V) * (1 - n) - fbeta(V) * n;
   end Gate;
   partial model IonChannel
     output Real I "current";
@@ -52,22 +52,28 @@ package Modular
   end IonChannel;
   model PotassiumChannel
     extends IonChannel(G_max=120, V_eq=-115);
-    Gate gate_act "actiaction gate";
+    Gate gate_act(
+      redeclare function falpha= goldmanFit(V_off=10, sres=0.1, sV=0.1),
+      redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125)
+    ) "actiaction gate";
   equation
-    gate_act.alpha = goldmanFit(V, 10, 0.1, 0.1);
-    gate_act.beta = scaledExpFit(V, 1/80, 0.125);
     G = G_max * gate_act.n ^ 4;
+    connect(V, gate_act.V);
   end PotassiumChannel;
   model SodiumChannel
     extends IonChannel(G_max=36, V_eq=12);
-    Gate gate_act "activation gate";
-    Gate gate_inact "inactivation gate";
+    Gate gate_act(
+      redeclare function falpha= goldmanFit(V_off=25, sres=0.1, sV=1),
+      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4)
+    ) "activation gate";
+    Gate gate_inact(
+      redeclare function falpha= scaledExpFit(sx=1/20, sy=0.07),
+      redeclare function fbeta= inactivationFit(V_off=30, sV=0.1)
+    ) "inactivation gate";
   equation
-    gate_act.alpha = goldmanFit(V, 25, 0.1, 1);
-    gate_act.beta = scaledExpFit(V, 1/18, 4);
-    gate_inact.alpha = scaledExpFit(V, 1/20, 0.07);
-    gate_inact.beta = inactivationFit(V, 30, 0.1);
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
+    connect(V, gate_act.V);
+    connect(V, gate_inact.V);
   end SodiumChannel;
   model LeakChannel
     extends IonChannel(G_max=0.3, V_eq=-10.613);
