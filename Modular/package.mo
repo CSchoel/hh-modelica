@@ -19,7 +19,11 @@ package Modular
     Real V_adj "adjusted V with offset and scaling factor";
   algorithm
     V_adj := sV * (V + V_off);
-    res := sres * V_adj / (exp(V_adj) - 1);
+    if V_adj == 0 then
+      res := sV; // using L'Hôpital to find limit for V_adj->0
+    else
+      res := sres * V_adj / (exp(V_adj) - 1);
+    end if;
   end goldmanFit;
   // TODO: better explanation for what this function actually represents
   function inactivationFit
