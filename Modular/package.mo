@@ -78,7 +78,7 @@ package Modular
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    Real V;
+    Real V(start=-90, fixed=true);
     Real I_total;
     Real I = 40; // TODO: explain
     parameter Real C = 1;
