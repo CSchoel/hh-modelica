@@ -85,5 +85,8 @@ package Modular
   equation
     I_total = c_pot.I + c_sod.I + c_leak.I - I;
     der(V) = -I_total / C;
+    connect(V, c_pot.V);
+    connect(V, c_sod.V);
+    connect(V, c_leak.V);
   end Cell;
 end Modular;
