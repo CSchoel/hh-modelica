@@ -98,4 +98,5 @@ equation
   der(m) = phi*(alpham*(1-m)-betam*m);
   der(h) = phi*(alphah*(1-h)-betah*h);
 annotation(
-    experiment(StartTime = 0, StopTime = 30000, Tolerance = 1e-6, Interval = 0.01));end HH;
+    experiment(StartTime = 0, StopTime = 30000, Tolerance = 1e-6, Interval = 0.01));
+end HH;
