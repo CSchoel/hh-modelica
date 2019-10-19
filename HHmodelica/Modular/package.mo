@@ -47,10 +47,10 @@ package Modular
     x_adj := k * (x - x0);
     y := 1 / (exp(x_adj) + 1);
   end decliningLogisticFit;
-  model Gate
-    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open position";
-    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed position";
-    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in 'open' position";
+  model Gate "gating molecule with two conformations/positions A and B"
+    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
+    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
+    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
     input Real V "membrane potential (as displacement from resting potential)";
   equation
     der(n) = falpha(V) * (1 - n) - fbeta(V) * n;
@@ -69,7 +69,7 @@ package Modular
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=0.1, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125)
-    ) "actiaction gate";
+    ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
     connect(V, gate_act.V);
@@ -79,11 +79,11 @@ package Modular
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=0.1, sV=1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4)
-    ) "activation gate";
+    ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=0.07),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1)
-    ) "inactivation gate";
+    ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
     connect(V, gate_act.V);
