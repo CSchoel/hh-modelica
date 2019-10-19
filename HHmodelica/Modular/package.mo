@@ -75,7 +75,7 @@ package Modular
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
-    connect(V, gate_act.V);
+    connect(p.V, gate_act.V);
   end PotassiumChannel;
   model SodiumChannel "channel selective for Na+ ions"
     extends IonChannel(G_max=36, V_eq=12);
@@ -89,8 +89,8 @@ package Modular
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
-    connect(V, gate_act.V);
-    connect(V, gate_inact.V);
+    connect(p.V, gate_act.V);
+    connect(p.V, gate_inact.V);
   end SodiumChannel;
   model LeakChannel "constant leakage current of ions through membrane"
     extends IonChannel(G_max=0.3, V_eq=-10.613);
