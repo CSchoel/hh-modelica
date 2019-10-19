@@ -105,17 +105,22 @@ package Modular
   equation
     der(p.V) = p.I / C;
   end Membrane;
+  model ConstantMembraneCurrent
+    parameter Real I;
+    MembranePin p;
+  equation
+    p.I = I;
+  end ConstantMembraneCurrent;
   model Cell
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
     Membrane m;
-    MembranePin ext "external current applied to membrane";
+    ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
   equation
-    ext.I = 40;
     connect(c_pot.p, m.p);
     connect(c_sod.p, m.p);
     connect(c_leak.p, m.p);
-    connect(ext, m.p);
+    connect(ext.p, m.p);
   end Cell;
 end Modular;
