@@ -1,44 +1,54 @@
 within HHmodelica;
 package Modular
-  function scaledExpFit
+  function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis";
     input Real sy "scaling factor for y axis";
-    output Real y;
+    output Real y "result";
   algorithm
     y := sy * exp(sx * x);
   end scaledExpFit;
-  // TODO: better explanation for what this function actually represents
-  function goldmanFit
+  function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
     input Real V "potential (as displacement from resting potential)";
     input Real V_off "offset for V";
-    input Real sres "scaling factor for result";
-    input Real sV "scaling factor for V in exp";
-    output Real res "result";
+    input Real sdn "scaling factor for dn";
+    input Real sV "scaling factor for V";
+    output Real dn "rate of change of the gating variable at given V";
   protected
     Real V_adj "adjusted V with offset and scaling factor";
   algorithm
     V_adj := sV * (V + V_off);
     if V_adj == 0 then
-      res := sV; // using L'Hôpital to find limit for V_adj->0
+      dn := sV; // using L'Hôpital to find limit for V_adj->0
     else
-      res := sres * V_adj / (exp(V_adj) - 1);
+      dn := sdn * V_adj / (exp(V_adj) - 1);
     end if;
+    annotation(
+      Documentation(info="
+        <html>
+          <p>Hodgkin and Huxley state that this formula was (in part) used
+          because it &quot;bears a close resemblance to the equation derived
+          by Goldman (1943) for the movements of a charged particle in a constant
+          field&quot;.</p>
+          <p>We suppose that this statement refers to equation 11 of Goldman
+          (1943) when n_i' is zero.</p>
+        </html>
+      ")
+    );
   end goldmanFit;
-  // TODO: better explanation for what this function actually represents
-  function inactivationFit
-    input Real V "potential (as displacement from resting potential)";
-    input Real V_off "offset for V";
-    input Real sV "scaling factor for V";
-    output Real res "result";
+  function decliningLogisticFit "logistic function with flipped x-axis"
+    input Real x "input value";
+    input Real x0 "x-value of sigmoid midpoint";
+    input Real k "growth rate/steepness";
+    output Real y "result";
   protected
-    Real V_adj "adjusted V with offset and scaling factor";
+    Real x_adj "adjusted x with offset and scaling factor";
   algorithm
-    V_adj := sV * (V + V_off);
-    res := 1 / (exp(V_adj) + 1);
-  end inactivationFit;
+    x_adj := k * (x - x0);
+    y := 1 / (exp(x_adj) + 1);
+  end decliningLogisticFit;
   model Gate
-    replaceable function falpha = goldmanFit(V_off=0, sres=1, sV=1) "rate of transfer from closed to open position";
+    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open position";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed position";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in 'open' position";
     input Real V;
@@ -57,7 +67,7 @@ package Modular
   model PotassiumChannel
     extends IonChannel(G_max=120, V_eq=-115);
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=10, sres=0.1, sV=0.1),
+      redeclare function falpha= goldmanFit(V_off=10, sdn=0.1, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125)
     ) "actiaction gate";
   equation
@@ -67,12 +77,12 @@ package Modular
   model SodiumChannel
     extends IonChannel(G_max=36, V_eq=12);
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=25, sres=0.1, sV=1),
+      redeclare function falpha= goldmanFit(V_off=25, sdn=0.1, sV=1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4)
     ) "activation gate";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=0.07),
-      redeclare function fbeta= inactivationFit(V_off=30, sV=0.1)
+      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1)
     ) "inactivation gate";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
