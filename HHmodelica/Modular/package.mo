@@ -1,5 +1,9 @@
 within HHmodelica;
 package Modular
+  connector MembranePin "electrical connector for membrane currents"
+    flow Real I "ionic current through membrane";
+    Real V "membrane potential (as displacement from resting potential)";
+  end MembranePin;
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis";
@@ -56,13 +60,12 @@ package Modular
     der(n) = falpha(V) * (1 - n) - fbeta(V) * n;
   end Gate;
   partial model IonChannel "ionic current through the membrane"
-    output Real I "ionic current through membrane";
+    MembranePin p "connection to the membrane";
     Real G "ion conductance";
-    input Real V "membrane potential (as displacement from resting potential)";
     parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max "maximum conductance";
   equation
-    I = G * (V - V_eq);
+    p.I = G * (p.V - V_eq);
   end IonChannel;
   model PotassiumChannel "channel selective for K+ ions"
     extends IonChannel(G_max=120, V_eq=-115);
@@ -94,19 +97,25 @@ package Modular
   equation
     G = G_max;
   end LeakChannel;
+  model Membrane "membrane model relating individual currents to total voltage"
+    MembranePin p;
+    parameter Real C = 1 "membrane capacitance";
+  initial equation
+    p.V = -90 "short initial stimulation";
+  equation
+    der(p.V) = p.I / C;
+  end Membrane;
   model Cell
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    Real V(start=-90, fixed=true) "membrane potential (as displacement from resting potential)";
-    Real I_total "total current through membrane";
-    Real I = 40 "external current applied to membrane";
-    parameter Real C = 1;
+    Membrane m;
+    MembranePin ext "external current applied to membrane";
   equation
-    I_total = c_pot.I + c_sod.I + c_leak.I - I;
-    der(V) = -I_total / C;
-    connect(V, c_pot.V);
-    connect(V, c_sod.V);
-    connect(V, c_leak.V);
+    ext.I = 40;
+    connect(c_pot.p, m.p);
+    connect(c_sod.p, m.p);
+    connect(c_leak.p, m.p);
+    connect(ext, m.p);
   end Cell;
 end Modular;
