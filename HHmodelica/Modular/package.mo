@@ -68,7 +68,7 @@ package Modular
     p.I = G * (p.V - V_eq);
   end IonChannel;
   model PotassiumChannel "channel selective for K+ ions"
-    extends IonChannel(G_max=120, V_eq=-115);
+    extends IonChannel(G_max=36, V_eq=-115);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=0.1, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125)
@@ -78,7 +78,7 @@ package Modular
     connect(p.V, gate_act.V);
   end PotassiumChannel;
   model SodiumChannel "channel selective for Na+ ions"
-    extends IonChannel(G_max=36, V_eq=12);
+    extends IonChannel(G_max=120, V_eq=12);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4)
