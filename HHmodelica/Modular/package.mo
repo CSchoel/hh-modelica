@@ -1,9 +1,15 @@
 within HHmodelica;
 package Modular
-  connector MembranePin "electrical connector for membrane currents"
+  connector MembranePin_in "electrical connector for membrane currents"
+    input Real T "membrane temperature";
     flow Real I "ionic current through membrane";
     Real V "membrane potential (as displacement from resting potential)";
-  end MembranePin;
+  end MembranePin_in;
+  connector MembranePin_out "electrical connector for membrane currents"
+    output Real T "membrane temperature";
+    flow Real I "ionic current through membrane";
+    Real V "membrane potential (as displacement from resting potential)";
+  end MembranePin_out;
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis";
@@ -55,12 +61,15 @@ package Modular
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
-    input Real V "membrane potential (as displacement from resting potential)";
+    Real V "equilibrium potential (as displacement from resting potential)";
+    input Real T "temperature";
+  protected
+    Real phi = 3^((T-6.3)/10);
   equation
-    der(n) = falpha(V) * (1 - n) - fbeta(V) * n;
+    der(n) = phi * (falpha(V) * (1 - n) - fbeta(V) * n);
   end Gate;
   partial model IonChannel "ionic current through the membrane"
-    MembranePin p "connection to the membrane";
+    MembranePin_in p "connection to the membrane";
     Real G "ion conductance";
     parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max "maximum conductance";
@@ -71,26 +80,26 @@ package Modular
     extends IonChannel(G_max=36, V_eq=-115);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=0.1, sV=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125)
+      redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125),
+      V= p.V, T= p.T
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
-    connect(p.V, gate_act.V);
   end PotassiumChannel;
   model SodiumChannel "channel selective for Na+ ions"
     extends IonChannel(G_max=120, V_eq=12);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1, sV=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4)
+      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4),
+      V= p.V, T= p.T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=0.07),
-      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1)
+      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1),
+      V= p.V, T= p.T
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
-    connect(p.V, gate_act.V);
-    connect(p.V, gate_inact.V);
   end SodiumChannel;
   model LeakChannel "constant leakage current of ions through membrane"
     extends IonChannel(G_max=0.3, V_eq=-10.613);
@@ -98,7 +107,7 @@ package Modular
     G = G_max;
   end LeakChannel;
   model Membrane "membrane model relating individual currents to total voltage"
-    MembranePin p;
+    MembranePin_out p(T=6.3);
     parameter Real C = 1 "membrane capacitance";
   initial equation
     p.V = -90 "short initial stimulation";
@@ -107,7 +116,7 @@ package Modular
   end Membrane;
   model ConstantMembraneCurrent
     parameter Real I;
-    MembranePin p;
+    MembranePin_in p;
   equation
     p.I = I;
   end ConstantMembraneCurrent;
