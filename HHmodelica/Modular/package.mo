@@ -9,7 +9,7 @@ package Modular
     y := sy * exp(sx * x);
   end scaledExpFit;
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
-    input Real V "potential (as displacement from resting potential)";
+    input Real V "membrane potential (as displacement from resting potential)";
     input Real V_off "offset for V";
     input Real sdn "scaling factor for dn";
     input Real sV "scaling factor for V";
@@ -51,14 +51,14 @@ package Modular
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open position";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed position";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in 'open' position";
-    input Real V;
+    input Real V "membrane potential (as displacement from resting potential)";
   equation
     der(n) = falpha(V) * (1 - n) - fbeta(V) * n;
   end Gate;
   partial model IonChannel
     output Real I "current";
     Real G "conductance";
-    input Real V "actual potential (as displacement from resting potential)";
+    input Real V "membrane potential (as displacement from resting potential)";
     parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max "maximum conductance";
   equation
