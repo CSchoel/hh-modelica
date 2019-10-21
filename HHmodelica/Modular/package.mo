@@ -125,6 +125,8 @@ package Modular
     SodiumChannel c_sod;
     LeakChannel c_leak;
     Membrane m;
+    // I = 40 => recurring depolarizations
+    // I = 0 => V returns to 0
     ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
   equation
     connect(c_pot.p, m.p);
