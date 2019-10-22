@@ -1,10 +1,10 @@
 within HHmodelica;
 package Modular
   connector MembranePin "electrical connector for membrane currents"
-    Real T "membrane temperature";
-    flow Real dT "change in membrane temperature (should always be 0)";
-    flow Real I "ionic current through membrane";
-    Real V "membrane potential (as displacement from resting potential)";
+    Real T(unit="degC") "membrane temperature";
+    flow Real dT(unit="degC/s") "change in membrane temperature (should always be 0)";
+    flow Real I(unit="mV") "ionic current through membrane";
+    Real V(unit="mV") "membrane potential (as displacement from resting potential)";
   end MembranePin;
 
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
@@ -61,8 +61,8 @@ package Modular
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
-    input Real V "membrane potential (as displacement from resting potential)";
-    input Real T "temperature";
+    input Real V(unit="mV") "membrane potential (as displacement from resting potential)";
+    input Real T(unit="degC") "temperature";
   protected
     Real phi = 3^((T-6.3)/10);
   equation
@@ -71,9 +71,9 @@ package Modular
 
   partial model IonChannel "ionic current through the membrane"
     MembranePin p "connection to the membrane";
-    Real G "ion conductance";
-    parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
-    parameter Real G_max "maximum conductance";
+    Real G(unit="mmho/cm2") "ion conductance";
+    parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
+    parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
     p.I = G * (p.V - V_eq);
     p.dT = 0; // no change in temperature
@@ -114,8 +114,8 @@ package Modular
 
   model Membrane "membrane model relating individual currents to total voltage"
     MembranePin p;
-    parameter Real T = 6.3 "membrane temperature";
-    parameter Real C = 1 "membrane capacitance";
+    parameter Real T(unit="degC") = 6.3 "membrane temperature";
+    parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
     p.V = -90 "short initial stimulation";
     p.T = T "constant temperature (unless any component sets dT != 0)";
