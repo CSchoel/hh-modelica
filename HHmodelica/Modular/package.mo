@@ -8,17 +8,17 @@ package Modular
   end MembranePin;
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
-    input Real sx "scaling factor for x axis";
-    input Real sy "scaling factor for y axis";
+    input Real sx "scaling factor for x axis (fitting parameter)";
+    input Real sy "scaling factor for y axis (fitting parameter)";
     output Real y "result";
   algorithm
     y := sy * exp(sx * x);
   end scaledExpFit;
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
     input Real V "membrane potential (as displacement from resting potential)";
-    input Real V_off "offset for V";
-    input Real sdn "scaling factor for dn";
-    input Real sV "scaling factor for V";
+    input Real V_off "offset for V (fitting parameter)";
+    input Real sdn "scaling factor for dn (fitting parameter)";
+    input Real sV "scaling factor for V (fitting parameter)";
     output Real dn "rate of change of the gating variable at given V";
   protected
     Real V_adj "adjusted V with offset and scaling factor";
@@ -44,8 +44,8 @@ package Modular
   end goldmanFit;
   function decliningLogisticFit "logistic function with flipped x-axis"
     input Real x "input value";
-    input Real x0 "x-value of sigmoid midpoint";
-    input Real k "growth rate/steepness";
+    input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
+    input Real k "growth rate/steepness (fitting parameter)";
     output Real y "result";
   protected
     Real x_adj "adjusted x with offset and scaling factor";
