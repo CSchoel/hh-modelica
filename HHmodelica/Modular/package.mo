@@ -49,12 +49,13 @@ package Modular
     input Real x "input value";
     input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
     input Real k "growth rate/steepness (fitting parameter)";
+    input Real L "maximum value";
     output Real y "result";
   protected
     Real x_adj "adjusted x with offset and scaling factor";
   algorithm
     x_adj := k * (x - x0);
-    y := 1 / (exp(x_adj) + 1);
+    y := L / (exp(x_adj) + 1);
   end decliningLogisticFit;
 
   model Gate "gating molecule with two conformations/positions A and B"
@@ -82,8 +83,8 @@ package Modular
   model PotassiumChannel "channel selective for K+ ions"
     extends IonChannel(G_max=36, V_eq=12);
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=10, sdn=0.1, sV=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/80, sy=0.125),
+      redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
+      redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
       V= p.V, T= p.T
     ) "actiaction gate (A = open, B = closed)";
   equation
@@ -93,13 +94,13 @@ package Modular
   model SodiumChannel "channel selective for Na+ ions"
     extends IonChannel(G_max=120, V_eq=-115);
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=25, sdn=1, sV=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4),
+      redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
+      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
       V= p.V, T= p.T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
-      redeclare function falpha= scaledExpFit(sx=1/20, sy=0.07),
-      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1),
+      redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
+      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
       V= p.V, T= p.T
     ) "inactivation gate (A = closed, b = open)";
   equation
@@ -120,7 +121,7 @@ package Modular
     p.V = -90 "short initial stimulation";
     p.T = T "constant temperature (unless any component sets dT != 0)";
   equation
-    der(p.V) = p.I / C;
+    der(p.V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
     der(p.T) = p.dT;
   end Membrane;
 
