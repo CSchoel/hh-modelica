@@ -6,6 +6,7 @@ package Modular
     flow Real I "ionic current through membrane";
     Real V "membrane potential (as displacement from resting potential)";
   end MembranePin;
+
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis (fitting parameter)";
@@ -14,6 +15,7 @@ package Modular
   algorithm
     y := sy * exp(sx * x);
   end scaledExpFit;
+
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
     input Real V "membrane potential (as displacement from resting potential)";
     input Real V_off "offset for V (fitting parameter)";
@@ -42,6 +44,7 @@ package Modular
       ")
     );
   end goldmanFit;
+
   function decliningLogisticFit "logistic function with flipped x-axis"
     input Real x "input value";
     input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
@@ -53,6 +56,7 @@ package Modular
     x_adj := k * (x - x0);
     y := 1 / (exp(x_adj) + 1);
   end decliningLogisticFit;
+
   model Gate "gating molecule with two conformations/positions A and B"
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
@@ -64,6 +68,7 @@ package Modular
   equation
     der(n) = phi * (falpha(V) * (1 - n) - fbeta(V) * n);
   end Gate;
+
   partial model IonChannel "ionic current through the membrane"
     MembranePin p "connection to the membrane";
     Real G "ion conductance";
@@ -73,6 +78,7 @@ package Modular
     p.I = G * (p.V - V_eq);
     p.dT = 0; // no change in temperature
   end IonChannel;
+
   model PotassiumChannel "channel selective for K+ ions"
     extends IonChannel(G_max=36, V_eq=12);
     Gate gate_act(
@@ -83,6 +89,7 @@ package Modular
   equation
     G = G_max * gate_act.n ^ 4;
   end PotassiumChannel;
+
   model SodiumChannel "channel selective for Na+ ions"
     extends IonChannel(G_max=120, V_eq=-115);
     Gate gate_act(
@@ -98,11 +105,13 @@ package Modular
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
   end SodiumChannel;
+
   model LeakChannel "constant leakage current of ions through membrane"
     extends IonChannel(G_max=0.3, V_eq=-10.613);
   equation
     G = G_max;
   end LeakChannel;
+
   model Membrane "membrane model relating individual currents to total voltage"
     MembranePin p;
     parameter Real T = 6.3 "membrane temperature";
@@ -114,6 +123,7 @@ package Modular
     der(p.V) = p.I / C;
     der(p.T) = p.dT;
   end Membrane;
+
   model ConstantMembraneCurrent
     parameter Real I;
     MembranePin p;
@@ -121,6 +131,7 @@ package Modular
     p.I = I;
     p.dT = 0;
   end ConstantMembraneCurrent;
+
   model Cell
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
