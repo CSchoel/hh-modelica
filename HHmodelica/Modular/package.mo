@@ -3,7 +3,7 @@ package Modular
   connector MembranePin "electrical connector for membrane currents"
     Real T(unit="degC") "membrane temperature";
     flow Real dT(unit="degC/s") "change in membrane temperature (should always be 0)";
-    flow Real I(unit="mV") "ionic current through membrane";
+    flow Real I(unit="uA/cm2") "ionic current through membrane";
     Real V(unit="mV") "membrane potential (as displacement from resting potential)";
   end MembranePin;
 
