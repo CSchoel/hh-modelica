@@ -1,15 +1,11 @@
 within HHmodelica;
 package Modular
-  connector MembranePin_in "electrical connector for membrane currents"
-    input Real T "membrane temperature";
+  connector MembranePin "electrical connector for membrane currents"
+    Real T "membrane temperature";
+    flow Real dT "change in membrane temperature (should always be 0)";
     flow Real I "ionic current through membrane";
     Real V "membrane potential (as displacement from resting potential)";
-  end MembranePin_in;
-  connector MembranePin_out "electrical connector for membrane currents"
-    output Real T "membrane temperature";
-    flow Real I "ionic current through membrane";
-    Real V "membrane potential (as displacement from resting potential)";
-  end MembranePin_out;
+  end MembranePin;
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis";
@@ -61,7 +57,7 @@ package Modular
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
-    Real V "equilibrium potential (as displacement from resting potential)";
+    input Real V "membrane potential (as displacement from resting potential)";
     input Real T "temperature";
   protected
     Real phi = 3^((T-6.3)/10);
@@ -69,12 +65,13 @@ package Modular
     der(n) = phi * (falpha(V) * (1 - n) - fbeta(V) * n);
   end Gate;
   partial model IonChannel "ionic current through the membrane"
-    MembranePin_in p "connection to the membrane";
+    MembranePin p "connection to the membrane";
     Real G "ion conductance";
     parameter Real V_eq "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max "maximum conductance";
   equation
     p.I = G * (p.V - V_eq);
+    p.dT = 0; // no change in temperature
   end IonChannel;
   model PotassiumChannel "channel selective for K+ ions"
     extends IonChannel(G_max=36, V_eq=12);
@@ -107,18 +104,22 @@ package Modular
     G = G_max;
   end LeakChannel;
   model Membrane "membrane model relating individual currents to total voltage"
-    MembranePin_out p(T=6.3);
+    MembranePin p;
+    parameter Real T = 6.3 "membrane temperature";
     parameter Real C = 1 "membrane capacitance";
   initial equation
     p.V = -90 "short initial stimulation";
+    p.T = T "constant temperature (unless any component sets dT != 0)";
   equation
     der(p.V) = p.I / C;
+    der(p.T) = p.dT;
   end Membrane;
   model ConstantMembraneCurrent
     parameter Real I;
-    MembranePin_in p;
+    MembranePin p;
   equation
     p.I = I;
+    p.dT = 0;
   end ConstantMembraneCurrent;
   model Cell
     PotassiumChannel c_pot;
