@@ -64,7 +64,6 @@ package TwoPin
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
     der(p.T) = p.dT;
     n.T = p.T;
-    n.dT = 0;
   end Membrane2P;
 
   model ConstantMembraneCurrent2P
@@ -73,6 +72,7 @@ package TwoPin
     MembranePin p;
   equation
     p.I = I;
+    p.dT = n.dT;
     p.dT = 0;
   end ConstantMembraneCurrent2P;
 
