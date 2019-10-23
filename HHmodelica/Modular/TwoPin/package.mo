@@ -4,10 +4,7 @@ package TwoPin
     MembranePin p;
     MembranePin n;
     Real V(unit="mV");
-    Real T(unit="degC");
   equation
-    p.T = n.T;
-    p.dT = n.dT;
     0 = p.I + n.I;
     V = p.V - n.V;
   end TwoPinComponent;
@@ -19,6 +16,7 @@ package TwoPin
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
     p.I = G * (V - V_eq);
+    p.dT = n.dT;
     p.dT = 0;
   end IonChannel2P;
 
@@ -65,6 +63,8 @@ package TwoPin
   equation
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
     der(p.T) = p.dT;
+    n.T = p.T;
+    n.dT = 0;
   end Membrane2P;
 
   model ConstantMembraneCurrent2P
