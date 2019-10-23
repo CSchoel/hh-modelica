@@ -76,8 +76,6 @@ package TwoPin
     p.dT = 0;
   end ConstantMembraneCurrent2P;
 
-  // TODO: we need a ground somewhere
-
   model Cell2P
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
