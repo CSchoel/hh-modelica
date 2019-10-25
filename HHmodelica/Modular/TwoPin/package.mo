@@ -12,14 +12,20 @@ package TwoPin
   partial model IonChannel2P "ionic current through the membrane"
     extends TwoPinComponent;
     Real G(unit="mmho/cm2") "ion conductance";
-    parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
-    p.I = G * (V - V_eq);
+    p.I = G * V;
   end IonChannel2P;
 
+  model VoltageSource
+    extends TwoPinComponent;
+    parameter Real V_const = 1;
+  equation
+    V = V_const;
+  end VoltageSource;
+
   model PotassiumChannel2P "channel selective for K+ ions"
-    extends IonChannel2P(G_max=36, V_eq=12);
+    extends IonChannel2P(G_max=36);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
@@ -30,7 +36,7 @@ package TwoPin
   end PotassiumChannel2P;
 
   model SodiumChannel2P "channel selective for Na+ ions"
-    extends IonChannel2P(G_max=120, V_eq=-115);
+    extends IonChannel2P(G_max=120);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
@@ -46,7 +52,7 @@ package TwoPin
   end SodiumChannel2P;
 
   model LeakChannel2P "constant leakage current of ions through membrane"
-    extends IonChannel2P(G_max=0.3, V_eq=-10.613);
+    extends IonChannel2P(G_max=0.3);
   equation
     G = G_max;
   end LeakChannel2P;
@@ -71,20 +77,26 @@ package TwoPin
 
   model Cell2P
     PotassiumChannel2P c_pot;
+    VoltageSource v_pot(V_const=12);
     SodiumChannel2P c_sod;
+    VoltageSource v_sod(V_const=-115);
     LeakChannel2P c_leak;
+    VoltageSource v_leak(V_const=-10.613);
     Membrane2P m;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantMembraneCurrent2P ext(I=40) "external current applied to membrane";
   equation
     connect(c_pot.p, m.p);
+    connect(c_pot.n, v_pot.p);
+    connect(v_pot.p, m.n);
     connect(c_sod.p, m.p);
+    connect(c_sod.n, v_sod.p);
+    connect(v_sod.p, m.n);
     connect(c_leak.p, m.p);
+    connect(c_leak.n, v_leak.p);
+    connect(v_leak.p, m.n);
     connect(ext.p, m.p);
-    connect(c_pot.n, m.n);
-    connect(c_sod.n, m.n);
-    connect(c_leak.n, m.n);
     connect(ext.n, m.n);
   end Cell2P;
 end TwoPin;
