@@ -62,7 +62,7 @@ package TwoPin
     parameter Real T(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
-    V = -90 "short initial stimulation";
+    //V = -90 "short initial stimulation";
   equation
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
   end Membrane2P;
@@ -75,6 +75,17 @@ package TwoPin
     p.I = I;
   end ConstantMembraneCurrent2P;
 
+  model InitialStimulation
+    extends TwoPinComponent;
+    parameter Real V0 = -90;
+  equation
+    if initial() then
+      V = V0;
+    else
+      V = 0;
+    end if;
+  end InitialStimulation;
+
   model Cell2P
     PotassiumChannel2P c_pot;
     VoltageSource v_pot(V_const=12);
@@ -86,6 +97,7 @@ package TwoPin
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantMembraneCurrent2P ext(I=40) "external current applied to membrane";
+    InitialStimulation stim;
   equation
     connect(c_pot.p, m.p);
     connect(c_pot.n, v_pot.p);
@@ -98,5 +110,7 @@ package TwoPin
     connect(v_leak.p, m.n);
     connect(ext.p, m.p);
     connect(ext.n, m.n);
+    connect(stim.p, m.p);
+    connect(stim.n, m.n);
   end Cell2P;
 end TwoPin;
