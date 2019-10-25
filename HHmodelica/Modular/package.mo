@@ -1,8 +1,9 @@
 within HHmodelica;
 package Modular
+  connector TemperatureInput = input Real(unit="degC") "membrane temperature";
+  connector TemperatureOutput = output Real(unit="degC") "membrane temperature";
+
   connector MembranePin "electrical connector for membrane currents"
-    Real T(unit="degC") "membrane temperature";
-    flow Real dT(unit="degC/s") "change in membrane temperature (should always be 0)";
     flow Real I(unit="uA/cm2") "ionic current through membrane";
     Real V(unit="mV") "membrane potential (as displacement from resting potential)";
   end MembranePin;
@@ -63,7 +64,7 @@ package Modular
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
     input Real V(unit="mV") "membrane potential (as displacement from resting potential)";
-    input Real T(unit="degC") "temperature";
+    TemperatureInput T;
   protected
     Real phi = 3^((T-6.3)/10);
   equation
@@ -72,12 +73,12 @@ package Modular
 
   partial model IonChannel "ionic current through the membrane"
     MembranePin p "connection to the membrane";
+    TemperatureInput T;
     Real G(unit="mmho/cm2") "ion conductance";
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
     p.I = G * (p.V - V_eq);
-    p.dT = 0; // no change in temperature
   end IonChannel;
 
   model PotassiumChannel "channel selective for K+ ions"
@@ -85,7 +86,7 @@ package Modular
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      V= p.V, T= p.T
+      V= p.V, T= T
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
@@ -96,12 +97,12 @@ package Modular
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      V= p.V, T= p.T
+      V= p.V, T= T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      V= p.V, T= p.T
+      V= p.V, T= T
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
@@ -115,14 +116,13 @@ package Modular
 
   model Membrane "membrane model relating individual currents to total voltage"
     MembranePin p;
-    parameter Real T(unit="degC") = 6.3 "membrane temperature";
+    TemperatureOutput T = T_m;
+    parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
     p.V = -90 "short initial stimulation";
-    p.T = T "constant temperature (unless any component sets dT != 0)";
   equation
     der(p.V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
-    der(p.T) = p.dT;
   end Membrane;
 
   model ConstantMembraneCurrent
@@ -130,7 +130,6 @@ package Modular
     MembranePin p;
   equation
     p.I = I;
-    p.dT = 0;
   end ConstantMembraneCurrent;
 
   model Cell
@@ -146,5 +145,8 @@ package Modular
     connect(c_sod.p, m.p);
     connect(c_leak.p, m.p);
     connect(ext.p, m.p);
+    connect(m.T, c_pot.T);
+    connect(m.T, c_sod.T);
+    connect(m.T, c_leak.T);
   end Cell;
 end Modular;
