@@ -89,13 +89,13 @@ package TwoPin
   equation
     connect(c_pot.p, m.p);
     connect(c_pot.n, v_pot.p);
-    connect(v_pot.p, m.n);
+    connect(v_pot.n, m.n);
     connect(c_sod.p, m.p);
     connect(c_sod.n, v_sod.p);
-    connect(v_sod.p, m.n);
+    connect(v_sod.n, m.n);
     connect(c_leak.p, m.p);
     connect(c_leak.n, v_leak.p);
-    connect(v_leak.p, m.n);
+    connect(v_leak.n, m.n);
     connect(ext.p, m.p);
     connect(ext.n, m.n);
   end Cell2P;
