@@ -69,6 +69,12 @@ package TwoPin
     p.I = I;
   end ConstantMembraneCurrent2P;
 
+  model Ground
+    MembranePin p;
+  equation
+    p.V = 0;
+  end Ground;
+
   model Cell2P
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
@@ -77,6 +83,7 @@ package TwoPin
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantMembraneCurrent2P ext(I=40) "external current applied to membrane";
+    Ground g;
   equation
     connect(c_pot.p, m.p);
     connect(c_sod.p, m.p);
@@ -86,5 +93,6 @@ package TwoPin
     connect(c_sod.n, m.n);
     connect(c_leak.n, m.n);
     connect(ext.n, m.n);
+    connect(g.p, m.n);
   end Cell2P;
 end TwoPin;
