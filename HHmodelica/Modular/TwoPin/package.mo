@@ -96,7 +96,7 @@ package TwoPin
     connect(c_leak.p, m.p);
     connect(c_leak.n, v_leak.p);
     connect(v_leak.n, m.n);
-    connect(ext.n, m.p);
-    connect(ext.p, m.n);
+    connect(ext.p, m.p);
+    connect(ext.n, m.n);
   end Cell2P;
 end TwoPin;
