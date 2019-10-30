@@ -98,5 +98,7 @@ equation
   der(m) = phi*(alpham*(1-m)-betam*m);
   der(h) = phi*(alphah*(1-h)-betah*h);
 annotation(
-    experiment(StartTime = 0, StopTime = 30000, Tolerance = 1e-6, Interval = 0.01));
+    experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
+    __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+);
 end HH;

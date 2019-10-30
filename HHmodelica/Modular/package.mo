@@ -149,4 +149,8 @@ package Modular
     connect(m.T, c_sod.T);
     connect(m.T, c_leak.T);
   end Cell;
+  annotation(
+    experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
+    __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+  );
 end Modular;

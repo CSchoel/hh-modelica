@@ -94,5 +94,9 @@ package TwoPin
     connect(c_leak.n, m.n);
     connect(ext.n, m.n);
     connect(g.p, m.n);
+  annotation(
+    experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
+    __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+  );
   end Cell2P;
 end TwoPin;
