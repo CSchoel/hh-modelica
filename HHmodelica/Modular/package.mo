@@ -144,6 +144,7 @@ package Modular
     LeakChannel c_leak;
     LipidBilayer m;
   equation
+    connect(p, m.p);
     connect(c_pot.p, m.p);
     connect(c_sod.p, m.p);
     connect(c_leak.p, m.p);
