@@ -86,12 +86,12 @@ package TwoPin
     Ground g;
   equation
     connect(c_pot.p, m.p);
-    connect(c_sod.p, m.p);
-    connect(c_leak.p, m.p);
-    connect(ext.p, m.p);
     connect(c_pot.n, m.n);
+    connect(c_sod.p, m.p);
     connect(c_sod.n, m.n);
+    connect(c_leak.p, m.p);
     connect(c_leak.n, m.n);
+    connect(ext.p, m.p);
     connect(ext.n, m.n);
     connect(g.p, m.n);
   annotation(
