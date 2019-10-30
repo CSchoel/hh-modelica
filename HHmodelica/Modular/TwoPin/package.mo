@@ -19,6 +19,7 @@ package TwoPin
   end IonChannel2P;
 
   partial model GatedIonChannel2P "ion channel that has voltage-dependent gates"
+    extends IonChannel2P;
     TemperatureInput T "membrane temperature to determine reaction coefficient";
   end GatedIonChannel2P;
 
