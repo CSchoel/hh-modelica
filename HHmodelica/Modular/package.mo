@@ -73,7 +73,6 @@ package Modular
 
   partial model IonChannel "ionic current through the membrane"
     MembranePin p "connection to the membrane";
-    TemperatureInput T;
     Real G(unit="mmho/cm2") "ion conductance";
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
@@ -81,8 +80,13 @@ package Modular
     p.I = G * (p.V - V_eq);
   end IonChannel;
 
+  partial model GatedIonChannel
+    extends IonChannel;
+    TemperatureInput T "membrane temperature to determine reaction coefficient";
+  end GatedIonChannel;
+
   model PotassiumChannel "channel selective for K+ ions"
-    extends IonChannel(G_max=36, V_eq=12);
+    extends GatedIonChannel(G_max=36, V_eq=12);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
@@ -93,7 +97,7 @@ package Modular
   end PotassiumChannel;
 
   model SodiumChannel "channel selective for Na+ ions"
-    extends IonChannel(G_max=120, V_eq=-115);
+    extends GatedIonChannel(G_max=120, V_eq=-115);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
@@ -116,7 +120,7 @@ package Modular
 
   model Membrane "membrane model relating individual currents to total voltage"
     MembranePin p;
-    TemperatureOutput T = T_m;
+    TemperatureOutput T = T_m "constant membrane temperature";
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
@@ -147,7 +151,6 @@ package Modular
     connect(ext.p, m.p);
     connect(m.T, c_pot.T);
     connect(m.T, c_sod.T);
-    connect(m.T, c_leak.T);
   end Cell;
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
