@@ -28,7 +28,7 @@ package TwoPin
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      V= p.V, T=T
+      V=V, T=T
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
@@ -39,12 +39,12 @@ package TwoPin
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      V= p.V, T=T
+      V=V, T=T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      V= p.V, T=T
+      V=V, T=T
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
