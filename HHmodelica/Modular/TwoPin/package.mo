@@ -18,28 +18,32 @@ package TwoPin
     p.I = G * (V - V_eq);
   end IonChannel2P;
 
+  partial model GatedIonChannel2P "ion channel that has voltage-dependent gates"
+    TemperatureInput T "membrane temperature to determine reaction coefficient";
+  end GatedIonChannel2P;
+
   model PotassiumChannel2P "channel selective for K+ ions"
-    extends IonChannel2P(G_max=36, V_eq=12);
+    extends GatedIonChannel2P(G_max=36, V_eq=12);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      V= p.V, T=6.3
+      V= p.V, T=T
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
   end PotassiumChannel2P;
 
   model SodiumChannel2P "channel selective for Na+ ions"
-    extends IonChannel2P(G_max=120, V_eq=-115);
+    extends GatedIonChannel2P(G_max=120, V_eq=-115);
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      V= p.V, T=6.3
+      V= p.V, T=T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      V= p.V, T=6.3
+      V= p.V, T=T
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
@@ -53,7 +57,8 @@ package TwoPin
 
   model Membrane2P "membrane model relating individual currents to total voltage"
     extends TwoPinComponent;
-    parameter Real T(unit="degC") = 6.3 "membrane temperature";
+    TemperatureOutput T = T_m;
+    parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
     V = -90 "short initial stimulation";
@@ -87,8 +92,10 @@ package TwoPin
   equation
     connect(c_pot.p, m.p);
     connect(c_pot.n, m.n);
+    connect(c_pot.T, m.T);
     connect(c_sod.p, m.p);
     connect(c_sod.n, m.n);
+    connect(c_sod.T, m.T);
     connect(c_leak.p, m.p);
     connect(c_leak.n, m.n);
     connect(ext.p, m.p);
