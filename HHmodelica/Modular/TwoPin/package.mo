@@ -92,15 +92,15 @@ package TwoPin
   equation
     connect(c_pot.p, m.p);
     connect(c_pot.n, m.n);
-    connect(c_pot.T, m.T);
     connect(c_sod.p, m.p);
     connect(c_sod.n, m.n);
-    connect(c_sod.T, m.T);
     connect(c_leak.p, m.p);
     connect(c_leak.n, m.n);
     connect(ext.p, m.p);
     connect(ext.n, m.n);
     connect(g.p, m.n);
+    connect(c_pot.T, m.T);
+    connect(c_sod.T, m.T);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
