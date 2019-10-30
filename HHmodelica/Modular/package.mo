@@ -136,24 +136,31 @@ package Modular
     p.I = I;
   end ConstantMembraneCurrent;
 
+  // TODO rename Cell to something else
   model Cell
+    MembranePin p;
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
     Membrane m;
-    // I = 40 => recurring depolarizations
-    // I = 0 => V returns to 0
-    ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
   equation
     connect(c_pot.p, m.p);
     connect(c_sod.p, m.p);
     connect(c_leak.p, m.p);
-    connect(ext.p, m.p);
     connect(m.T, c_pot.T);
     connect(m.T, c_sod.T);
   end Cell;
+
+  model HHm
+    Cell c;
+    // I = 40 => recurring depolarizations
+    // I = 0 => V returns to 0
+    ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
+  equation
+    connect(c.p, ext.p);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
   );
+  end HHm;
 end Modular;
