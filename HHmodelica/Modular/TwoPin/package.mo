@@ -1,8 +1,8 @@
 within HHmodelica.Modular;
 package TwoPin
   model TwoPinComponent
-    MembranePin p;
-    MembranePin n;
+    ElectricalPin p;
+    ElectricalPin n;
     Real V(unit="mV");
   equation
     0 = p.I + n.I;
@@ -70,20 +70,20 @@ package TwoPin
   model ConstantCurrent2P
     extends TwoPinComponent;
     parameter Real I;
-    MembranePin p;
+    ElectricalPin p;
   equation
     p.I = I;
   end ConstantCurrent2P;
 
   model Ground
-    MembranePin p;
+    ElectricalPin p;
   equation
     p.V = 0;
   end Ground;
 
   model Membrane2P
-    MembranePin p;
-    MembranePin n;
+    ElectricalPin p;
+    ElectricalPin n;
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
     LeakChannel2P c_leak;

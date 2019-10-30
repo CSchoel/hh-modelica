@@ -3,10 +3,10 @@ package Modular
   connector TemperatureInput = input Real(unit="degC") "membrane temperature";
   connector TemperatureOutput = output Real(unit="degC") "membrane temperature";
 
-  connector MembranePin "electrical connector for membrane currents"
+  connector ElectricalPin "electrical connector for membrane currents"
     flow Real I(unit="uA/cm2") "ionic current through membrane";
     Real V(unit="mV") "membrane potential (as displacement from resting potential)";
-  end MembranePin;
+  end ElectricalPin;
 
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
@@ -72,7 +72,7 @@ package Modular
   end Gate;
 
   partial model IonChannel "ionic current through the membrane"
-    MembranePin p "connection to the membrane";
+    ElectricalPin p "connection to the membrane";
     Real G(unit="mmho/cm2") "ion conductance";
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
@@ -119,7 +119,7 @@ package Modular
   end LeakChannel;
 
   model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
-    MembranePin p;
+    ElectricalPin p;
     TemperatureOutput T = T_m "constant membrane temperature";
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
@@ -132,13 +132,13 @@ package Modular
 
   model ConstantCurrent
     parameter Real I;
-    MembranePin p;
+    ElectricalPin p;
   equation
     p.I = I;
   end ConstantCurrent;
 
   model Membrane
-    MembranePin p;
+    ElectricalPin p;
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
