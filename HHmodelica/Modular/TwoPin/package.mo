@@ -81,6 +81,8 @@ package TwoPin
     p.V = 0;
   end Ground;
 
+  // TODO we actually do not model a whole cell here, only the membrane
+  // => change name
   model Cell2P
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
