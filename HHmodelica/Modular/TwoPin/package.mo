@@ -82,8 +82,8 @@ package TwoPin
   end Ground;
 
   model Membrane2P
-    ElectricalPin p;
-    ElectricalPin n;
+    ElectricalPin outside;
+    ElectricalPin inside;
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
     LeakChannel2P c_leak;
@@ -95,8 +95,8 @@ package TwoPin
     connect(c_sod.n, l.n);
     connect(c_leak.p, l.p);
     connect(c_leak.n, l.n);
-    connect(p, l.p);
-    connect(n, l.n);
+    connect(outside, l.p);
+    connect(inside, l.n);
     connect(c_pot.T, l.T);
     connect(c_sod.T, l.T);
   end Membrane2P;
@@ -108,9 +108,9 @@ package TwoPin
     ConstantCurrent2P ext(I=40) "external current applied to membrane";
     Ground g;
   equation
-    connect(m.p, ext.p);
-    connect(m.n, ext.n);
-    connect(m.n, g.p);
+    connect(m.outside, ext.p);
+    connect(m.inside, ext.n);
+    connect(m.inside, g.p);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
