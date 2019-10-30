@@ -142,23 +142,23 @@ package Modular
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    LipidBilayer m;
+    LipidBilayer l;
   equation
-    connect(p, m.p);
-    connect(c_pot.p, m.p);
-    connect(c_sod.p, m.p);
-    connect(c_leak.p, m.p);
-    connect(m.T, c_pot.T);
-    connect(m.T, c_sod.T);
+    connect(p, l.p);
+    connect(c_pot.p, l.p);
+    connect(c_sod.p, l.p);
+    connect(c_leak.p, l.p);
+    connect(l.T, c_pot.T);
+    connect(l.T, c_sod.T);
   end Membrane;
 
   model HHm
-    Membrane c;
+    Membrane m;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantCurrent ext(I=40) "external current applied to membrane";
   equation
-    connect(c.p, ext.p);
+    connect(m.p, ext.p);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")

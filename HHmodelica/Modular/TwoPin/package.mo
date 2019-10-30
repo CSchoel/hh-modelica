@@ -87,30 +87,30 @@ package TwoPin
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
     LeakChannel2P c_leak;
-    LipidBilayer2P m;
+    LipidBilayer2P l;
   equation
-    connect(c_pot.p, m.p);
-    connect(c_pot.n, m.n);
-    connect(c_sod.p, m.p);
-    connect(c_sod.n, m.n);
-    connect(c_leak.p, m.p);
-    connect(c_leak.n, m.n);
-    connect(p, m.p);
-    connect(n, m.n);
-    connect(c_pot.T, m.T);
-    connect(c_sod.T, m.T);
+    connect(c_pot.p, l.p);
+    connect(c_pot.n, l.n);
+    connect(c_sod.p, l.p);
+    connect(c_sod.n, l.n);
+    connect(c_leak.p, l.p);
+    connect(c_leak.n, l.n);
+    connect(p, l.p);
+    connect(n, l.n);
+    connect(c_pot.T, l.T);
+    connect(c_sod.T, l.T);
   end Membrane2P;
 
   model HH2P
-    Membrane2P cell;
+    Membrane2P m;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantCurrent2P ext(I=40) "external current applied to membrane";
     Ground g;
   equation
-    connect(cell.p, ext.p);
-    connect(cell.n, ext.n);
-    connect(cell.n, g.p);
+    connect(m.p, ext.p);
+    connect(m.n, ext.n);
+    connect(m.n, g.p);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
