@@ -130,12 +130,12 @@ package Modular
     der(p.V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
   end LipidBilayer;
 
-  model ConstantMembraneCurrent
+  model ConstantCurrent
     parameter Real I;
     MembranePin p;
   equation
     p.I = I;
-  end ConstantMembraneCurrent;
+  end ConstantCurrent;
 
   model Membrane
     MembranePin p;
@@ -155,7 +155,7 @@ package Modular
     Membrane c;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
-    ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
+    ConstantCurrent ext(I=40) "external current applied to membrane";
   equation
     connect(c.p, ext.p);
   annotation(

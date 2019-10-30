@@ -67,13 +67,13 @@ package TwoPin
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
   end LipidBilayer2P;
 
-  model ConstantMembraneCurrent2P
+  model ConstantCurrent2P
     extends TwoPinComponent;
     parameter Real I;
     MembranePin p;
   equation
     p.I = I;
-  end ConstantMembraneCurrent2P;
+  end ConstantCurrent2P;
 
   model Ground
     MembranePin p;
@@ -105,7 +105,7 @@ package TwoPin
     Membrane2P cell;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
-    ConstantMembraneCurrent2P ext(I=40) "external current applied to membrane";
+    ConstantCurrent2P ext(I=40) "external current applied to membrane";
     Ground g;
   equation
     connect(cell.p, ext.p);
