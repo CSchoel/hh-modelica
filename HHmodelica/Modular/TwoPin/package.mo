@@ -56,7 +56,7 @@ package TwoPin
     G = G_max;
   end LeakChannel2P;
 
-  model Membrane2P "membrane model relating individual currents to total voltage"
+  model LipidBilayer2P "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     extends TwoPinComponent;
     TemperatureOutput T = T_m;
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
@@ -65,7 +65,7 @@ package TwoPin
     V = -90 "short initial stimulation";
   equation
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
-  end Membrane2P;
+  end LipidBilayer2P;
 
   model ConstantMembraneCurrent2P
     extends TwoPinComponent;
@@ -81,15 +81,13 @@ package TwoPin
     p.V = 0;
   end Ground;
 
-  // TODO we actually do not model a whole cell here, only the membrane
-  // => change name
-  model Cell2P
+  model Membrane2P
     MembranePin p;
     MembranePin n;
     PotassiumChannel2P c_pot;
     SodiumChannel2P c_sod;
     LeakChannel2P c_leak;
-    Membrane2P m;
+    LipidBilayer2P m;
   equation
     connect(c_pot.p, m.p);
     connect(c_pot.n, m.n);
@@ -101,10 +99,10 @@ package TwoPin
     connect(n, m.n);
     connect(c_pot.T, m.T);
     connect(c_sod.T, m.T);
-  end Cell2P;
+  end Membrane2P;
 
   model HH2P
-    Cell2P cell;
+    Membrane2P cell;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantMembraneCurrent2P ext(I=40) "external current applied to membrane";

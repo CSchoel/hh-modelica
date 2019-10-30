@@ -118,16 +118,17 @@ package Modular
     G = G_max;
   end LeakChannel;
 
-  model Membrane "membrane model relating individual currents to total voltage"
+  model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     MembranePin p;
     TemperatureOutput T = T_m "constant membrane temperature";
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
+    parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
-    p.V = -90 "short initial stimulation";
+    p.V = V_init;
   equation
     der(p.V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
-  end Membrane;
+  end LipidBilayer;
 
   model ConstantMembraneCurrent
     parameter Real I;
@@ -136,23 +137,22 @@ package Modular
     p.I = I;
   end ConstantMembraneCurrent;
 
-  // TODO rename Cell to something else
-  model Cell
+  model Membrane
     MembranePin p;
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    Membrane m;
+    LipidBilayer m;
   equation
     connect(c_pot.p, m.p);
     connect(c_sod.p, m.p);
     connect(c_leak.p, m.p);
     connect(m.T, c_pot.T);
     connect(m.T, c_sod.T);
-  end Cell;
+  end Membrane;
 
   model HHm
-    Cell c;
+    Membrane c;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
     ConstantMembraneCurrent ext(I=40) "external current applied to membrane";
