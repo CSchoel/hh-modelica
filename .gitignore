@@ -1,3 +1,6 @@
 # Mo|E files
 mope-project.json
 target
+
+# Modelica-Exports of SVG files
+img/*.mo
