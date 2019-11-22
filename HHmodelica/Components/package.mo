@@ -127,6 +127,7 @@ package Components
 
   model LeakChannel "constant leakage current of ions through membrane"
     extends IonChannel(G_max=0.3, V_eq=-10.613);
+    extends HHmodelica.Icons.OpenChannel;
   equation
     G = G_max;
   end LeakChannel;
