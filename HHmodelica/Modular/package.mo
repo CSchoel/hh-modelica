@@ -1,75 +1,7 @@
 within HHmodelica;
 package Modular
-  connector TemperatureInput = input Real(unit="degC") "membrane temperature";
-  connector TemperatureOutput = output Real(unit="degC") "membrane temperature";
 
-  connector ElectricalPin "electrical connector for membrane currents"
-    flow Real I(unit="uA/cm2") "ionic current through membrane";
-    Real V(unit="mV") "membrane potential (as displacement from resting potential)";
-  end ElectricalPin;
-
-  function scaledExpFit "exponential function with scaling parameters for x and y axis"
-    input Real x "input value";
-    input Real sx "scaling factor for x axis (fitting parameter)";
-    input Real sy "scaling factor for y axis (fitting parameter)";
-    output Real y "result";
-  algorithm
-    y := sy * exp(sx * x);
-  end scaledExpFit;
-
-  function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
-    input Real V "membrane potential (as displacement from resting potential)";
-    input Real V_off "offset for V (fitting parameter)";
-    input Real sdn "scaling factor for dn (fitting parameter)";
-    input Real sV "scaling factor for V (fitting parameter)";
-    output Real dn "rate of change of the gating variable at given V";
-  protected
-    Real V_adj "adjusted V with offset and scaling factor";
-  algorithm
-    V_adj := sV * (V + V_off);
-    if V_adj == 0 then
-      dn := sV; // using L'Hôpital to find limit for V_adj->0
-    else
-      dn := sdn * V_adj / (exp(V_adj) - 1);
-    end if;
-    annotation(
-      Documentation(info="
-        <html>
-          <p>Hodgkin and Huxley state that this formula was (in part) used
-          because it &quot;bears a close resemblance to the equation derived
-          by Goldman (1943) for the movements of a charged particle in a constant
-          field&quot;.</p>
-          <p>We suppose that this statement refers to equation 11 of Goldman
-          (1943) when n_i' is zero.</p>
-        </html>
-      ")
-    );
-  end goldmanFit;
-
-  function decliningLogisticFit "logistic function with flipped x-axis"
-    input Real x "input value";
-    input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
-    input Real k "growth rate/steepness (fitting parameter)";
-    input Real L "maximum value";
-    output Real y "result";
-  protected
-    Real x_adj "adjusted x with offset and scaling factor";
-  algorithm
-    x_adj := k * (x - x0);
-    y := L / (exp(x_adj) + 1);
-  end decliningLogisticFit;
-
-  model Gate "gating molecule with two conformations/positions A and B"
-    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
-    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
-    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
-    input Real V(unit="mV") "membrane potential (as displacement from resting potential)";
-    TemperatureInput T;
-  protected
-    Real phi = 3^((T-6.3)/10);
-  equation
-    der(n) = phi * (falpha(V) * (1 - n) - fbeta(V) * n);
-  end Gate;
+  
 
   partial model IonChannel "ionic current through the membrane"
     ElectricalPin p "connection to the membrane";
