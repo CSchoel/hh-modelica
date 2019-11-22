@@ -165,7 +165,7 @@ package Components
   partial model GatedIonChannel "ion channel that has voltage-dependent gates"
     extends IonChannel;
     TemperatureInput T "membrane temperature to determine reaction coefficient"
-      annotation (Placement(transformation(extent={{-40, 90},{-60, 110}})));
+      annotation (Placement(transformation(extent={{-40, 48},{-60, 68}})));
   end GatedIonChannel;
 
   model PotassiumChannel "channel selective for K+ ions"
@@ -208,7 +208,7 @@ package Components
   model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     extends TwoPinComponent;
     extends HHmodelica.Icons.LipidBilayer;
-    TemperatureOutput T = T_m annotation (Placement(transformation(extent={{40, 90},{60, 110}})));
+    TemperatureOutput T = T_m annotation (Placement(transformation(extent={{40, 48},{60, 68}})));
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
