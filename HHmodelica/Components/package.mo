@@ -82,6 +82,7 @@ package Components
 
   partial model IonChannel "ionic current through the membrane"
     extends TwoPinComponent;
+    extends HHmodelica.Icons.IonChannel;
     Real G(unit="mmho/cm2") "ion conductance";
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
@@ -96,6 +97,7 @@ package Components
 
   model PotassiumChannel "channel selective for K+ ions"
     extends GatedIonChannel(G_max=36, V_eq=12);
+    extends HHmodelica.Icons.Activatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
@@ -107,6 +109,8 @@ package Components
 
   model SodiumChannel "channel selective for Na+ ions"
     extends GatedIonChannel(G_max=120, V_eq=-115);
+    extends HHmodelica.Icons.Activatable;
+    extends HHmodelica.Icons.Inactivatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
@@ -129,6 +133,7 @@ package Components
 
   model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     extends TwoPinComponent;
+    extends HHmodelica.Icons.LipidBilayer;
     TemperatureOutput T = T_m;
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
@@ -153,6 +158,7 @@ package Components
   end Ground;
 
   model Membrane
+    extends HHmodelica.Icons.LipidBilayer;
     ElectricalPin outside;
     ElectricalPin inside;
     PotassiumChannel c_pot;
@@ -173,6 +179,7 @@ package Components
   end Membrane;
 
   model CurrentClamp
+    extends HHmodelica.Icons.CurrentClamp;
     ElectricalPin ext "extracellular electrode";
     ElectricalPin int "intracellular electrode(s)";
     parameter Real I = 40 "current applied to membrane";
