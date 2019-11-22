@@ -8,9 +8,49 @@ package Components
     Real V(unit="mV") "membrane potential (as displacement from resting potential)";
   end ElectricalPin;
 
+  connector PositivePin
+    extends ElectricalPin;
+    annotation(
+      Icon(
+        coordinateSystem(
+          preserveAspectRatio=true,
+          extent={{-100,-100},{100,100}}
+        ),
+        graphics={
+          Rectangle(
+            extent={{-100,100},{100,-100}},
+            lineColor={0,0,255},
+            fillColor={0,0,255},
+            fillPattern=FillPattern.Solid
+          )
+        }
+      )
+    );
+  end PositivePin;
+
+  connector NegativePin
+    extends ElectricalPin;
+    annotation(
+      Icon(
+        coordinateSystem(
+          preserveAspectRatio=true,
+          extent={{-100,-100},{100,100}}
+        ),
+        graphics={
+          Rectangle(
+            extent={{-100,100},{100,-100}},
+            lineColor={0,0,255},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid
+          )
+        }
+      )
+    );
+  end NegativePin;
+
   model TwoPinComponent
-    ElectricalPin p;
-    ElectricalPin n;
+    PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     Real V(unit="mV");
   equation
     0 = p.I + n.I;
@@ -147,21 +187,20 @@ package Components
   model ConstantCurrent
     extends TwoPinComponent;
     parameter Real I;
-    ElectricalPin p;
   equation
     p.I = I;
   end ConstantCurrent;
 
   model Ground
-    ElectricalPin p;
+    PositivePin p;
   equation
     p.V = 0;
   end Ground;
 
   model Membrane
     extends HHmodelica.Icons.LipidBilayer;
-    ElectricalPin outside;
-    ElectricalPin inside;
+    PositivePin outside;
+    NegativePin inside;
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
@@ -181,8 +220,8 @@ package Components
 
   model CurrentClamp
     extends HHmodelica.Icons.CurrentClamp;
-    ElectricalPin ext "extracellular electrode";
-    ElectricalPin int "intracellular electrode(s)";
+    PositivePin ext "extracellular electrode";
+    NegativePin int "intracellular electrode(s)";
     parameter Real I = 40 "current applied to membrane";
     ConstantCurrent cur(I=I) "external current applied to membrane";
     Ground g;
