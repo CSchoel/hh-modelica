@@ -1,7 +1,39 @@
 within HHmodelica;
 package Components
-  connector TemperatureInput = input Real(unit="degC") "membrane temperature";
-  connector TemperatureOutput = output Real(unit="degC") "membrane temperature";
+  connector TemperatureInput = input Real(unit="degC") "membrane temperature"
+    annotation(
+      Icon(
+        coordinateSystem(
+          preserveAspectRatio=true,
+          extent={{-100,-100},{100,100}}
+        ),
+        graphics={
+          Ellipse(
+            extent={{-100,100},{100,-100}},
+            lineColor={255,0,0},
+            fillColor={255,255,255},
+            fillPattern=FillPattern.Solid
+          )
+        }
+      )
+    );
+  connector TemperatureOutput = output Real(unit="degC") "membrane temperature"
+    annotation(
+      Icon(
+        coordinateSystem(
+          preserveAspectRatio=true,
+          extent={{-100,-100},{100,100}}
+        ),
+        graphics={
+          Ellipse(
+            extent={{-100,100},{100,-100}},
+            lineColor={255,0,0},
+            fillColor={255,0,0},
+            fillPattern=FillPattern.Solid
+          )
+        }
+      )
+    );
 
   connector ElectricalPin "electrical connector for membrane currents"
     flow Real I(unit="uA/cm2") "ionic current through membrane";
@@ -132,7 +164,8 @@ package Components
 
   partial model GatedIonChannel "ion channel that has voltage-dependent gates"
     extends IonChannel;
-    TemperatureInput T "membrane temperature to determine reaction coefficient";
+    TemperatureInput T "membrane temperature to determine reaction coefficient"
+      annotation (Placement(transformation(extent={{-40, 90},{-60, 110}})));
   end GatedIonChannel;
 
   model PotassiumChannel "channel selective for K+ ions"
@@ -175,7 +208,7 @@ package Components
   model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     extends TwoPinComponent;
     extends HHmodelica.Icons.LipidBilayer;
-    TemperatureOutput T = T_m;
+    TemperatureOutput T = T_m annotation (Placement(transformation(extent={{40, 90},{60, 110}})));
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
   initial equation
