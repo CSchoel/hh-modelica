@@ -1,5 +1,5 @@
 within HHmodelica;
-model HH
+model HHmono "monolithic version of the Hodgkin-Huxley model"
   parameter Real Cm(unit = "uF/cm2")       = 1;
   parameter Real gbarNa(unit = "mmho/cm2")   = 120 "max sodium conductance";
   parameter Real gbarK(unit = "mmho/cm2")    = 36 "max potassium conductance";
@@ -101,4 +101,4 @@ annotation(
     experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
 );
-end HH;
+end HHmono;
