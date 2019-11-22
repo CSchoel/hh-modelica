@@ -1,4 +1,4 @@
-within HHmodelica;
+within HHmodelica.CompleteModels;
 model HHmono "monolithic version of the Hodgkin-Huxley model"
   parameter Real Cm(unit = "uF/cm2")       = 1;
   parameter Real gbarNa(unit = "mmho/cm2")   = 120 "max sodium conductance";
