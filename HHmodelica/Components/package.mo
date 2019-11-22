@@ -199,8 +199,8 @@ package Components
 
   model Membrane
     extends HHmodelica.Icons.LipidBilayer;
-    PositivePin outside;
-    NegativePin inside;
+    PositivePin outside annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin inside annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
@@ -220,8 +220,8 @@ package Components
 
   model CurrentClamp
     extends HHmodelica.Icons.CurrentClamp;
-    PositivePin ext "extracellular electrode";
-    NegativePin int "intracellular electrode(s)";
+    PositivePin ext "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin int "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     parameter Real I = 40 "current applied to membrane";
     ConstantCurrent cur(I=I) "external current applied to membrane";
     Ground g;
