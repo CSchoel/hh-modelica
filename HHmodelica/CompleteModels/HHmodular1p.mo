@@ -1,5 +1,7 @@
 within HHmodelica.CompleteModels;
 model HHmodular1p
+  import HHmodelica.Components.OnePin.Membrane;
+  import HHmodelica.Components.OnePin.ConstantCurrent;
   Membrane m;
   // I = 40 => recurring depolarizations
   // I = 0 => V returns to 0
