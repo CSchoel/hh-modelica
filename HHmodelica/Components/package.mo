@@ -172,16 +172,26 @@ package Components
     connect(c_sod.T, l.T);
   end Membrane;
 
+  model CurrentClamp
+    ElectricalPin ext "extracellular electrode";
+    ElectricalPin int "intracellular electrode(s)";
+    parameter Real I = 40 "current applied to membrane";
+    ConstantCurrent cur(I=I) "external current applied to membrane";
+    Ground g;
+  equation
+    connect(ext, cur.p);
+    connect(int, cur.n);
+    connect(g.p, int);
+  end CurrentClamp;
+
   model HH
     Membrane m;
     // I = 40 => recurring depolarizations
     // I = 0 => V returns to 0
-    ConstantCurrent ext(I=40) "external current applied to membrane";
-    Ground g;
+    CurrentClamp c(I=40);
   equation
-    connect(m.outside, ext.p);
-    connect(m.inside, ext.n);
-    connect(m.inside, g.p);
+    connect(m.outside, c.ext);
+    connect(m.inside, c.int);
   annotation(
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
