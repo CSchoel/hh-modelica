@@ -1,5 +1,5 @@
 within HHmodelica.CompleteModels;
-model HHelectric
+model HHelectric "electrical analogy (without voltage-dependent behavior of channels)"
   Modelica.Electrical.Analog.Basic.Capacitor membrane(C = 1, v(fixed = true, start = -25))  annotation(
     Placement(visible = true, transformation(origin = {-74, 8}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Electrical.Analog.Sources.ConstantVoltage V_Na(V = 50)  annotation(

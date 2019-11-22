@@ -1,5 +1,5 @@
 within HHmodelica.Components;
-package OnePin
+package OnePin "simplified modular variant that is closer to equations, but farther from electrical analogy"
   partial model IonChannel "ionic current through the membrane"
     ElectricalPin p "connection to the membrane";
     Real G(unit="mmho/cm2") "ion conductance";
