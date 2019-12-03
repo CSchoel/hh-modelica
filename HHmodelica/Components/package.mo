@@ -258,10 +258,11 @@ package Components
     parameter Real I = 40 "current applied to membrane";
     ConstantCurrent cur(I=I) "external current applied to membrane";
     Ground g;
+    Real V = -int.V "measured membrane potential";
   equation
     connect(ext, cur.p);
     connect(int, cur.n);
-    connect(g.p, int);
+    connect(g.p, ext);
   end CurrentClamp;
 
 end Components;
