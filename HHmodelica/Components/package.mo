@@ -80,7 +80,7 @@ package Components
     );
   end NegativePin;
 
-  model TwoPinComponent
+  partial model TwoPinComponent
     PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     Real V(unit="mV");
