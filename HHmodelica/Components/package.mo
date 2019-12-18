@@ -175,7 +175,7 @@ package Components
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
       V=V, T=T
-    ) "actiaction gate (A = open, B = closed)";
+    ) "activation gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
   end PotassiumChannel;
