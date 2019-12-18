@@ -140,10 +140,11 @@ package Components
     y := L / (exp(x_adj) + 1);
   end decliningLogisticFit;
 
-  model Gate "gating molecule with two conformations/positions A and B"
-    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from conformation B to A";
-    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from conformation A to B";
-    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in conformation A";
+  // TODO: better use "fopen" and "fclose" than "falpha" and "fbeta"
+  model Gate "gating molecule with an open conformation and a closed conformation"
+    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open conformation";
+    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
+    Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real V(unit="mV") "membrane potential (as displacement from resting potential)";
     TemperatureInput T;
   protected
@@ -175,7 +176,7 @@ package Components
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
       V=V, T=T
-    ) "activation gate (A = open, B = closed)";
+    ) "activation gate";
   equation
     G = G_max * gate_act.n ^ 4;
   end PotassiumChannel;
@@ -188,12 +189,12 @@ package Components
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
       V=V, T=T
-    ) "activation gate (A = open, B = closed)";
+    ) "activation gate";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
       V=V, T=T
-    ) "inactivation gate (A = closed, b = open)";
+    ) "inactivation gate";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
   end SodiumChannel;
