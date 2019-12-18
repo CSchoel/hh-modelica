@@ -211,8 +211,9 @@ package Components
     TemperatureOutput T = T_m annotation (Placement(transformation(extent={{40, 48},{60, 68}})));
     parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
+    parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
-    V = -90 "short initial stimulation";
+    V = V_init;
   equation
     der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
   end LipidBilayer;
