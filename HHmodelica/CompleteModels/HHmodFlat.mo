@@ -33,6 +33,6 @@ equation
     Line(points = {{-42, 13}, {-40, 13}, {-40, 16}, {-8, 16}, {-8, 12}}, color = {255, 0, 0}));
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
-  __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+  __OpenModelica_simulationFlags(s = "dassl")
 );
 end HHmodFlat;

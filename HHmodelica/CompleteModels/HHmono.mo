@@ -99,6 +99,6 @@ equation
   der(h) = phi*(alphah*(1-h)-betah*h);
 annotation(
     experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
-    __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+    __OpenModelica_simulationFlags(s = "dassl")
 );
 end HHmono;

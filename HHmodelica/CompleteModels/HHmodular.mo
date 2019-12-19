@@ -11,6 +11,6 @@ equation
   connect(m.inside, c.int);
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
-  __OpenModelica_simulationFlags(outputFormat = "csv", s = "dassl")
+  __OpenModelica_simulationFlags(s = "dassl")
 );
 end HHmodular;
