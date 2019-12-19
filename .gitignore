@@ -4,3 +4,6 @@ target
 
 # Modelica-Exports of SVG files
 img/*.mo
+
+# OMJulia outputs
+out
