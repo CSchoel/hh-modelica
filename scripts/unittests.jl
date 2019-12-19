@@ -25,7 +25,7 @@ try
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
             r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmono, stopTime=30, numberOfIntervals=3000, outputFormat=\"csv\")")
-            println(r["messages"])
+            @test !occursin("| warning |", r["messages"])
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
         end
@@ -35,6 +35,7 @@ try
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
             r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodFlat, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
+            @test !occursin("| warning |", r["messages"])
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
         end
@@ -44,6 +45,7 @@ try
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
             r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodular, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
+            @test !occursin("| warning |", r["messages"])
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
         end
@@ -53,6 +55,7 @@ try
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
             r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodular1p, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
+            @test !occursin("| warning |", r["messages"])
             es = OMJulia.sendExpression(omc, "getErrorString()")
             @test es == ""
         end
