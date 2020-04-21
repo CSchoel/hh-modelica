@@ -48,6 +48,17 @@ function testmodel(omc, name; override=Dict())
     es = OMJulia.sendExpression(omc, "getErrorString()")
     @test es == ""
     println(es)
+
+    # compare simulation results to regression data
+    vars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"$(name)_res.csv\")")
+    refilter = Regex(varfilter)
+    vars = filter(x -> occursin(refilter, x), vars)
+    if !isempty(vars)
+        varsStr = join(map(x -> "\"$x\"", vars), ", ")
+        cmd = "diffSimulationResults(\"$(name)_res.csv\", \"../regRefData/$(name)_res.csv\", \"$(name)_diff.log\", vars={ $varsStr })"
+        eq, ineqAr = OMJulia.sendExpression(omc, cmd)
+        @test isempty(ineqAr)
+    end
 end
 
 omc = OMJulia.OMCSession()
