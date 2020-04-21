@@ -27,12 +27,18 @@ function testmodel(omc, name; override=Dict())
     settings = Dict(
         "startTime"=>values[1], "stopTime"=>values[2],
         "tolerance"=>values[3], "numberOfIntervals"=>values[4],
-        "outputFormat"=>"\"csv\""
+        "outputFormat"=>"\"csv\"", "variableFilter"=>".*"
     )
     for x in keys(settings)
         if x in keys(override)
             settings[x] = override[x]
         end
+    end
+    # extract variable filter if present as vendor-specific annotation
+    csann = OMJulia.sendExpression(omc, "getAnnotationNamedModifiers($name, \"__ChrisS_testing\")")
+    if "testedVariableFilter" in csann
+        filter = OMJulia.sendExpression(omc, "getAnnotationModifierValue($name, \"__ChrisS_testing\", \"testedVariableFilter\")")
+        settings["variableFilter"] = filter
     end
     setstring = join(("$k=$v" for (k,v) in settings), ", ")
     r = OMJulia.sendExpression(omc, "simulate($name, $setstring)")
