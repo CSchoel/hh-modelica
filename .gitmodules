@@ -1,0 +1,3 @@
+[submodule "OMJulia"]
+	path = 3rdparty/OMJulia.jl
+	url = https://github.com/OpenModelica/OMJulia.jl
