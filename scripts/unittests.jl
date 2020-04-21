@@ -18,6 +18,31 @@ if !ispath(outdir)
 end
 cd(outdir)
 
+function testmodel(omc, name; override=Dict())
+    r = OMJulia.sendExpression(omc, "loadModel($name)")
+    @test r
+    es = OMJulia.sendExpression(omc, "getErrorString()")
+    @test es == ""
+    values = OMJulia.sendExpression(omc, "getSimulationOptions($name)")
+    settings = Dict(
+        "startTime"=>values[1], "stopTime"=>values[2],
+        "tolerance"=>values[3], "numberOfIntervals"=>values[4],
+        "outputFormat"=>"\"csv\""
+    )
+    for x in keys(settings)
+        if x in keys(override)
+            settings[x] = override[x]
+        end
+    end
+    setstring = join(("$k=$v" for (k,v) in settings), ", ")
+    r = OMJulia.sendExpression(omc, "simulate($name, $setstring)")
+    @test !occursin("| warning |", r["messages"])
+    @test !startswith(r["messages"], "Simulation execution failed")
+    es = OMJulia.sendExpression(omc, "getErrorString()")
+    @test es == ""
+    println(es)
+end
+
 omc = OMJulia.OMCSession()
 try
     mopath = OMJulia.sendExpression(omc, "getModelicaPath()")
@@ -28,44 +53,16 @@ try
     OMJulia.sendExpression(omc, "loadModel(Modelica)")
     @testset "Simulate examples" begin
         @testset "HHmono" begin
-            r = OMJulia.sendExpression(omc, "loadModel(HHmodelica.CompleteModels.HHmono)")
-            @test r
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
-            r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmono, stopTime=30, numberOfIntervals=3000, outputFormat=\"csv\")")
-            @test !occursin("| warning |", r["messages"])
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
+            testmodel(omc, "HHmono")
         end
         @testset "HHmodFlat" begin
-            r = OMJulia.sendExpression(omc, "loadModel(HHmodelica.CompleteModels.HHmodFlat)")
-            @test r
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
-            r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodFlat, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
-            @test !occursin("| warning |", r["messages"])
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
+            testmodel(omc, "HHmodFlat")
         end
         @testset "HHmodular" begin
-            r = OMJulia.sendExpression(omc, "loadModel(HHmodelica.CompleteModels.HHmodular)")
-            @test r
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
-            r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodular, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
-            @test !occursin("| warning |", r["messages"])
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
+            testmodel(omc, "HHmodular")
         end
         @testset "HHmodular1p" begin
-            r = OMJulia.sendExpression(omc, "loadModel(HHmodelica.CompleteModels.HHmodular1p)")
-            @test r
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
-            r = OMJulia.sendExpression(omc, "simulate(HHmodelica.CompleteModels.HHmodular1p, stopTime=0.03, numberOfIntervals=3000, outputFormat=\"csv\")")
-            @test !occursin("| warning |", r["messages"])
-            es = OMJulia.sendExpression(omc, "getErrorString()")
-            @test es == ""
+            testmodel(omc, "HHmodular1p")
         end
     end
 finally
