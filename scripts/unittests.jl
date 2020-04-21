@@ -53,16 +53,16 @@ try
     OMJulia.sendExpression(omc, "loadModel(Modelica)")
     @testset "Simulate examples" begin
         @testset "HHmono" begin
-            testmodel(omc, "HHmono")
+            testmodel(omc, "HHmodelica.CompleteModels.HHmono")
         end
         @testset "HHmodFlat" begin
-            testmodel(omc, "HHmodFlat")
+            testmodel(omc, "HHmodelica.CompleteModels.HHmodFlat")
         end
         @testset "HHmodular" begin
-            testmodel(omc, "HHmodular")
+            testmodel(omc, "HHmodelica.CompleteModels.HHmodular")
         end
         @testset "HHmodular1p" begin
-            testmodel(omc, "HHmodular1p")
+            testmodel(omc, "HHmodelica.CompleteModels.HHmodular1p")
         end
     end
 finally
