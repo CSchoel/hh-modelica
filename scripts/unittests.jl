@@ -1,10 +1,18 @@
-using OMJulia
 using Base.Filesystem
 using Test
 
+# move to parent directory of this file
 moroot = dirname(@__DIR__)
-outdir = "out"
 cd(moroot)
+
+# ugly workaround for using latest OMJulia with libgit2-julia incompatibility
+using Pkg
+Pkg.activate("3rdparty/OMJulia.jl")
+# end of ugly workaround
+using OMJulia
+
+# create outdir and move working directory there to capture OMC outputs
+outdir = "out"
 if !ispath(outdir)
     mkdir(outdir)
 end
