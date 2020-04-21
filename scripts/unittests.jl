@@ -36,9 +36,10 @@ function testmodel(omc, name; override=Dict())
     end
     # extract variable filter if present as vendor-specific annotation
     csann = OMJulia.sendExpression(omc, "getAnnotationNamedModifiers($name, \"__ChrisS_testing\")")
+    varfilter = ".*"
     if "testedVariableFilter" in csann
-        filter = OMJulia.sendExpression(omc, "getAnnotationModifierValue($name, \"__ChrisS_testing\", \"testedVariableFilter\")")
-        settings["variableFilter"] = "\"$filter\""
+        varfilter = OMJulia.sendExpression(omc, "getAnnotationModifierValue($name, \"__ChrisS_testing\", \"testedVariableFilter\")")
+        settings["variableFilter"] = "\"$varfilter\""
     end
     setstring = join(("$k=$v" for (k,v) in settings), ", ")
     r = OMJulia.sendExpression(omc, "simulate($name, $setstring)")
