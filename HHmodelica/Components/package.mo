@@ -100,7 +100,7 @@ package Components
 
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
     input Real v "membrane potential (as displacement from resting potential)";
-    input Real V_off "offset for v (fitting parameter)";
+    input Real v_off "offset for v (fitting parameter)";
     input Real sdn "scaling factor for dn (fitting parameter)";
     input Real sV "scaling factor for v (fitting parameter)";
     output Real dn "rate of change of the gating variable at given v";
