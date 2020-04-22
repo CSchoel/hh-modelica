@@ -146,9 +146,9 @@ package Components
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
-    TemperatureInput T;
+    TemperatureInput temp;
   protected
-    Real phi = 3^((T-6.3)/10);
+    Real phi = 3^((temp-6.3)/10);
   equation
     der(n) = phi * (falpha(v) * (1 - n) - fbeta(v) * n);
   end Gate;
@@ -156,67 +156,67 @@ package Components
   partial model IonChannel "ionic current through the membrane"
     extends TwoPinComponent;
     extends HHmodelica.Icons.IonChannel;
-    Real G(unit="mmho/cm2") "ion conductance";
-    parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
-    parameter Real G_max(unit="mmho/cm2") "maximum conductance";
+    Real g(unit="mmho/cm2") "ion conductance";
+    parameter Real v_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
+    parameter Real g_max(unit="mmho/cm2") "maximum conductance";
   equation
-    p.i = G * (v - V_eq);
+    p.i = g * (v - v_eq);
   end IonChannel;
 
   partial model GatedIonChannel "ion channel that has voltage-dependent gates"
     extends IonChannel;
-    TemperatureInput T "membrane temperature to determine reaction coefficient"
+    TemperatureInput temp "membrane temperature to determine reaction coefficient"
       annotation (Placement(transformation(extent={{-40, 48},{-60, 68}})));
   end GatedIonChannel;
 
   model PotassiumChannel "channel selective for K+ ions"
-    extends GatedIonChannel(G_max=36, V_eq=12);
+    extends GatedIonChannel(g_max=36, v_eq=12);
     extends HHmodelica.Icons.Activatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      v=v, T=T
+      v=v, temp=temp
     ) "activation gate";
   equation
-    G = G_max * gate_act.n ^ 4;
+    g = g_max * gate_act.n ^ 4;
   end PotassiumChannel;
 
   model SodiumChannel "channel selective for Na+ ions"
-    extends GatedIonChannel(G_max=120, V_eq=-115);
+    extends GatedIonChannel(g_max=120, v_eq=-115);
     extends HHmodelica.Icons.Activatable;
     extends HHmodelica.Icons.Inactivatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      v=v, T=T
+      v=v, temp=temp
     ) "activation gate";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      v=v, T=T
+      v=v, temp=temp
     ) "inactivation gate";
   equation
-    G = G_max * gate_act.n ^ 3 * gate_inact.n;
+    g = g_max * gate_act.n ^ 3 * gate_inact.n;
   end SodiumChannel;
 
   model LeakChannel "constant leakage current of ions through membrane"
-    extends IonChannel(G_max=0.3, V_eq=-10.613);
+    extends IonChannel(g_max=0.3, v_eq=-10.613);
     extends HHmodelica.Icons.OpenChannel;
   equation
-    G = G_max;
+    g = g_max;
   end LeakChannel;
 
   model LipidBilayer "lipid bilayer separating external and internal potential (i.e. acting as a capacitor)"
     extends TwoPinComponent;
     extends HHmodelica.Icons.LipidBilayer;
-    TemperatureOutput T = T_m annotation (Placement(transformation(extent={{40, 48},{60, 68}})));
-    parameter Real T_m(unit="degC") = 6.3 "membrane temperature";
-    parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
+    TemperatureOutput temp = temp_m annotation (Placement(transformation(extent={{40, 48},{60, 68}})));
+    parameter Real temp_m(unit="degC") = 6.3 "membrane temperature";
+    parameter Real c(unit="uF/cm2") = 1 "membrane capacitance";
     parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
     v = V_init;
   equation
-    der(v) = 1000 * p.i / C; // multiply with 1000 to get mV/s instead of v/s
+    der(v) = 1000 * p.i / c; // multiply with 1000 to get mV/s instead of v/s
   end LipidBilayer;
 
   model ConstantCurrent
@@ -249,8 +249,8 @@ package Components
     connect(c_leak.n, l.n);
     connect(outside, l.p);
     connect(inside, l.n);
-    connect(c_pot.T, l.T);
-    connect(c_sod.T, l.T);
+    connect(c_pot.temp, l.temp);
+    connect(c_sod.temp, l.temp);
   end Membrane;
 
   model CurrentClamp

@@ -27,13 +27,13 @@ equation
     Line(points = {{2, -14}, {0, -14}, {0, -40}, {-32, -40}, {-32, -14}, {-33, -14}}, color = {0, 0, 255}));
   connect(c_pot.n, l2.n) annotation(
     Line(points = {{-33, -14}, {-33, -40}, {-66, -40}, {-66, -14}}, color = {0, 0, 255}));
-  connect(l2.T, c_pot.T) annotation(
+  connect(l2.temp, c_pot.temp) annotation(
     Line(points = {{-58, 12}, {-58, 16}, {-42, 16}, {-42, 13}}, color = {255, 0, 0}));
-  connect(c_pot.T, c_sod.T) annotation(
+  connect(c_pot.temp, c_sod.temp) annotation(
     Line(points = {{-42, 13}, {-40, 13}, {-40, 16}, {-8, 16}, {-8, 12}}, color = {255, 0, 0}));
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
   __OpenModelica_simulationFlags(s = "dassl"),
-  __ChrisS_testing(testedVariableFilter="clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(G|gate_act\\.n|gate_inact\\.n)")
+  __ChrisS_testing(testedVariableFilter="clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)")
 );
 end HHmodular;
