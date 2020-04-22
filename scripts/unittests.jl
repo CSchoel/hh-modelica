@@ -50,9 +50,11 @@ function testmodel(omc, name; override=Dict())
     println(es)
 
     # compare simulation results to regression data
-    vars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"$(name)_res.csv\")")
-    refilter = Regex(varfilter)
-    vars = filter(x -> occursin(refilter, x), vars)
+    actvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"$(name)_res.csv\")")
+    refvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"../regRefData/$(name)_res.csv\")")
+    @test isequal(Set(actvars),Set(refvars))
+    # if variable sets differ, we should only check the variables that are present in both files
+    vars = collect(intersect(Set(actvars), Set(refvars)))
     if !isempty(vars)
         varsStr = join(map(x -> "\"$x\"", vars), ", ")
         cmd = "diffSimulationResults(\"$(name)_res.csv\", \"../regRefData/$(name)_res.csv\", \"$(name)_diff.log\", vars={ $varsStr })"
