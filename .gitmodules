@@ -3,3 +3,7 @@
 	url = https://github.com/OpenModelica/OMJulia.jl
 	shallow = true
 
+[submodule "hh-modelica-ref"]
+	path = regRefData
+	url = git@github.com:CSchoel/hh-modelica-ref.git
+	shallow = true
