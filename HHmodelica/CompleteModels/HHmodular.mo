@@ -17,9 +17,9 @@ equation
     Line(points = {{-33, 20}, {-32, 20}, {-32, 40}, {0, 40}, {0, 20}, {2, 20}}, color = {0, 0, 255}));
   connect(c_sod.p, c_leak.p) annotation(
     Line(points = {{2, 20}, {2, 20}, {2, 40}, {34, 40}, {34, 20}, {36, 20}}, color = {0, 0, 255}));
-  connect(c_leak.p, clamp.ext) annotation(
+  connect(c_leak.p, clamp.p) annotation(
     Line(points = {{36, 20}, {36, 20}, {36, 40}, {68, 40}, {68, 20}, {70, 20}}, color = {0, 0, 255}));
-  connect(clamp.int, c_leak.n) annotation(
+  connect(clamp.n, c_leak.n) annotation(
     Line(points = {{70, -14}, {68, -14}, {68, -40}, {36, -40}, {36, -14}, {36, -14}}, color = {0, 0, 255}));
   connect(c_leak.n, c_sod.n) annotation(
     Line(points = {{36, -14}, {34, -14}, {34, -40}, {2, -40}, {2, -14}, {2, -14}}, color = {0, 0, 255}));
