@@ -50,18 +50,18 @@ function testmodel(omc, name; override=Dict())
     println(es)
 
     # compare simulation results to regression data
-    actvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"$(name)_res.csv\")")
-    refvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"../regRefData/$(name)_res.csv\")")
-    @test isequal(Set(actvars),Set(refvars))
-    # if variable sets differ, we should only check the variables that are present in both files
-    vars = collect(intersect(Set(actvars), Set(refvars)))
-    if !isempty(vars)
+    if isfile("../regRefData/$(name)_res.csv")
+        actvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"$(name)_res.csv\")")
+        refvars = OMJulia.sendExpression(omc, "readSimulationResultVars(\"../regRefData/$(name)_res.csv\")")
+        @test isequal(Set(actvars),Set(refvars))
+        # if variable sets differ, we should only check the variables that are present in both files
+        vars = collect(intersect(Set(actvars), Set(refvars)))
         varsStr = join(map(x -> "\"$x\"", vars), ", ")
         cmd = "diffSimulationResults(\"$(name)_res.csv\", \"../regRefData/$(name)_res.csv\", \"$(name)_diff.log\", vars={ $varsStr })"
         eq, ineqAr = OMJulia.sendExpression(omc, cmd)
         @test isempty(ineqAr)
     else
-        write(Base.stderr, "WARNING: skipping test of simulation results for model $name\n")
+        write(Base.stderr, "WARNING: no reference data for regression test of $name\n")
     end
 end
 
