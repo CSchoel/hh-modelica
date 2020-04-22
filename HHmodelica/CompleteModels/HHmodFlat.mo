@@ -34,6 +34,6 @@ equation
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
   __OpenModelica_simulationFlags(s = "dassl"),
-  __ChrisS_testing(testedVariableFilter="currentClamp.(V|I)|potassiumChannel.(g|gate_act.n)|sodiumChannel.(G|gate_act.n|gate_inact.n)")
+  __ChrisS_testing(testedVariableFilter="currentClamp\\.(V|I)|potassiumChannel\\.(g|gate_act\\.n)|sodiumChannel\\.(G|gate_act\\.n|gate_inact\\.n)")
 );
 end HHmodFlat;
