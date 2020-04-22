@@ -58,6 +58,8 @@ function testmodel(omc, name; override=Dict())
         cmd = "diffSimulationResults(\"$(name)_res.csv\", \"../regRefData/$(name)_res.csv\", \"$(name)_diff.log\", vars={ $varsStr })"
         eq, ineqAr = OMJulia.sendExpression(omc, cmd)
         @test isempty(ineqAr)
+    else
+        write(Base.stderr, "WARNING: skipping test of simulation results for model $name\n")
     end
 end
 
