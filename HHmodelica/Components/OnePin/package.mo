@@ -34,7 +34,7 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
-      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
+      redeclare function fbeta= logisticFit(x0=-30, sx=-0.1, y_max=1000),
       v= p.v, temp= temp
     ) "inactivation gate (A = closed, b = open)";
   equation

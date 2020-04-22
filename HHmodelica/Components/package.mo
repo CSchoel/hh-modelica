@@ -129,18 +129,18 @@ package Components
     // => compare with ghkFlux again
   end goldmanFit;
 
-  function decliningLogisticFit "logistic function with flipped x-axis"
+  function logisticFit "logistic function with flipped x-axis"
     input Real x "input value";
     input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
-    input Real k "growth rate/steepness (fitting parameter)";
-    input Real L "maximum value";
+    input Real sx "growth rate/steepness (fitting parameter)";
+    input Real y_max "maximum value";
     output Real y "result";
   protected
     Real x_adj "adjusted x with offset and scaling factor";
   algorithm
-    x_adj := k * (x - x0);
-    y := L / (exp(x_adj) + 1);
-  end decliningLogisticFit;
+    x_adj := sx * (x - x0);
+    y := y_max / (exp(-x_adj) + 1);
+  end logisticFit;
 
   // TODO: better use "fopen" and "fclose" than "falpha" and "fbeta"
   model Gate "gating molecule with an open conformation and a closed conformation"
@@ -194,7 +194,7 @@ package Components
     ) "activation gate";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
-      redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
+      redeclare function fbeta= logisticFit(x0=-30, sx=-0.1, y_max=1000),
       v=v, temp=temp
     ) "inactivation gate";
   equation
