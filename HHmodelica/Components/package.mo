@@ -99,19 +99,19 @@ package Components
   end scaledExpFit;
 
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
-    input Real v "membrane potential (as displacement from resting potential)";
-    input Real v_off "offset for v (fitting parameter)";
-    input Real sdn "scaling factor for dn (fitting parameter)";
-    input Real sV "scaling factor for v (fitting parameter)";
-    output Real dn "rate of change of the gating variable at given v";
+    input Real x "membrane potential (as displacement from resting potential)";
+    input Real x0 "offset for x (fitting parameter)";
+    input Real sx "scaling factor for x (fitting parameter)";
+    input Real sy "scaling factor for y (fitting parameter)";
+    output Real y "rate of change of the gating variable at given V=x";
   protected
-    Real V_adj "adjusted v with offset and scaling factor";
+    Real x_adj "adjusted x with offset and scaling factor";
   algorithm
-    V_adj := sV * (v + v_off);
-    if V_adj == 0 then
-      dn := sV; // using L'Hôpital to find limit for V_adj->0
+    x_adj := sx * (x - x0);
+    if abs(x - x0) < 1e-6 then
+      y := sy; // using L'Hôpital to find limit for x_adj->0
     else
-      dn := sdn * V_adj / (exp(V_adj) - 1);
+      y := sy * x_adj / (exp(x_adj) - 1);
     end if;
     annotation(
       Documentation(info="
@@ -125,6 +125,8 @@ package Components
         </html>
       ")
     );
+    // TODO not so sure about where that reference to goldman comes from anymore
+    // => compare with ghkFlux again
   end goldmanFit;
 
   function decliningLogisticFit "logistic function with flipped x-axis"
@@ -173,7 +175,7 @@ package Components
     extends GatedIonChannel(g_max=36, v_eq=12);
     extends HHmodelica.Icons.Activatable;
     Gate gate_act(
-      redeclare function falpha= goldmanFit(v_off=10, sdn=100, sV=0.1),
+      redeclare function falpha= goldmanFit(x0=-10, sy=100, sx=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
       v=v, temp=temp
     ) "activation gate";
@@ -186,7 +188,7 @@ package Components
     extends HHmodelica.Icons.Activatable;
     extends HHmodelica.Icons.Inactivatable;
     Gate gate_act(
-      redeclare function falpha= goldmanFit(v_off=25, sdn=1000, sV=0.1),
+      redeclare function falpha= goldmanFit(x0=-25, sy=1000, sx=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
       v=v, temp=temp
     ) "activation gate";
