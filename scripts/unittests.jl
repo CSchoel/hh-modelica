@@ -78,7 +78,7 @@ try
             testmodel(omc, "HHmodelica.CompleteModels.HHmono")
         end
         @testset "HHmodFlat" begin
-            testmodel(omc, "HHmodelica.CompleteModels.HHmodFlat")
+            testmodel(omc, "HHmodelica.CompleteModels.HHmodHier")
         end
         @testset "HHmodular" begin
             testmodel(omc, "HHmodelica.CompleteModels.HHmodular")
