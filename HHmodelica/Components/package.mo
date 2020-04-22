@@ -234,8 +234,8 @@ package Components
 
   model Membrane
     extends HHmodelica.Icons.LipidBilayer;
-    PositivePin outside annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
-    NegativePin inside annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
+    PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
@@ -247,24 +247,24 @@ package Components
     connect(c_sod.n, l.n);
     connect(c_leak.p, l.p);
     connect(c_leak.n, l.n);
-    connect(outside, l.p);
-    connect(inside, l.n);
+    connect(p, l.p);
+    connect(n, l.n);
     connect(c_pot.temp, l.temp);
     connect(c_sod.temp, l.temp);
   end Membrane;
 
   model CurrentClamp
     extends HHmodelica.Icons.CurrentClamp;
-    PositivePin ext "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
-    NegativePin int "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
+    PositivePin p "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin n "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     parameter Real i = 40 "current applied to membrane";
     ConstantCurrent cur(i=i) "external current applied to membrane";
     Ground g;
-    Real v = -int.v "measured membrane potential";
+    Real v = -n.v "measured membrane potential";
   equation
-    connect(ext, cur.p);
-    connect(int, cur.n);
-    connect(g.p, ext);
+    connect(p, cur.p);
+    connect(n, cur.n);
+    connect(g.p, p);
   end CurrentClamp;
 
 end Components;

@@ -7,8 +7,8 @@ model HHmodHier
   // i = 0 => v returns to 0
   CurrentClamp c(i=40);
 equation
-  connect(m.outside, c.ext);
-  connect(m.inside, c.int);
+  connect(m.p, c.p);
+  connect(m.n, c.n);
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
   __OpenModelica_simulationFlags(s = "dassl"),
