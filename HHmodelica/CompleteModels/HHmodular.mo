@@ -11,6 +11,7 @@ equation
   connect(m.inside, c.int);
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
-  __OpenModelica_simulationFlags(s = "dassl")
+  __OpenModelica_simulationFlags(s = "dassl"),
+  __ChrisS_testing(testedVariableFilter="c\\.(V|I)|m\\.c_pot\\.(g|gate_act\\.n)|m\\.c_sod\\.(G|gate_act\\.n|gate_inact\\.n)")
 );
 end HHmodular;
