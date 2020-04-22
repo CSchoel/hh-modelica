@@ -2,11 +2,11 @@ within HHmodelica.CompleteModels;
 model HHelectric "electrical analogy (without voltage-dependent behavior of channels)"
   Modelica.Electrical.Analog.Basic.Capacitor membrane(C = 1, v(fixed = true, start = -25))  annotation(
     Placement(visible = true, transformation(origin = {-74, 8}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
-  Modelica.Electrical.Analog.Sources.ConstantVoltage V_Na(V = 50)  annotation(
+  Modelica.Electrical.Analog.Sources.ConstantVoltage V_Na(v = 50)  annotation(
     Placement(visible = true, transformation(origin = {-38, 8}, extent = {{10, 10}, {-10, -10}}, rotation = -90)));
-  Modelica.Electrical.Analog.Sources.ConstantVoltage V_K(V = 77)  annotation(
+  Modelica.Electrical.Analog.Sources.ConstantVoltage V_K(v = 77)  annotation(
     Placement(visible = true, transformation(origin = {-8, 8}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Modelica.Electrical.Analog.Sources.ConstantVoltage V_l(V = 55.613)  annotation(
+  Modelica.Electrical.Analog.Sources.ConstantVoltage V_l(v = 55.613)  annotation(
     Placement(visible = true, transformation(origin = {24, 8}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Electrical.Analog.Basic.Conductor G_Na(G = 120)  annotation(
     Placement(visible = true, transformation(origin = {-38, 46}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
@@ -14,7 +14,7 @@ model HHelectric "electrical analogy (without voltage-dependent behavior of chan
     Placement(visible = true, transformation(origin = {-8, 46}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Electrical.Analog.Basic.Conductor G_l(G = 0.3)  annotation(
     Placement(visible = true, transformation(origin = {24, 46}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
-  Modelica.Electrical.Analog.Sources.ConstantCurrent externalCurrent(I = 40) annotation(
+  Modelica.Electrical.Analog.Sources.ConstantCurrent externalCurrent(i = 40) annotation(
     Placement(visible = true, transformation(origin = {58, 8}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
 equation
   connect(G_K.n, V_K.p) annotation(

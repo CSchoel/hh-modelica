@@ -36,8 +36,8 @@ package Components
     );
 
   connector ElectricalPin "electrical connector for membrane currents"
-    flow Real I(unit="uA/cm2") "ionic current through membrane";
-    Real V(unit="mV") "membrane potential (as displacement from resting potential)";
+    flow Real i(unit="uA/cm2") "ionic current through membrane";
+    Real v(unit="mV") "membrane potential (as displacement from resting potential)";
   end ElectricalPin;
 
   connector PositivePin
@@ -83,10 +83,10 @@ package Components
   partial model TwoPinComponent
     PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
-    Real V(unit="mV");
+    Real v(unit="mV");
   equation
-    0 = p.I + n.I;
-    V = p.V - n.V;
+    0 = p.i + n.i;
+    v = p.v - n.v;
   end TwoPinComponent;
 
   function scaledExpFit "exponential function with scaling parameters for x and y axis"
@@ -99,15 +99,15 @@ package Components
   end scaledExpFit;
 
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
-    input Real V "membrane potential (as displacement from resting potential)";
-    input Real V_off "offset for V (fitting parameter)";
+    input Real v "membrane potential (as displacement from resting potential)";
+    input Real V_off "offset for v (fitting parameter)";
     input Real sdn "scaling factor for dn (fitting parameter)";
-    input Real sV "scaling factor for V (fitting parameter)";
-    output Real dn "rate of change of the gating variable at given V";
+    input Real sV "scaling factor for v (fitting parameter)";
+    output Real dn "rate of change of the gating variable at given v";
   protected
-    Real V_adj "adjusted V with offset and scaling factor";
+    Real V_adj "adjusted v with offset and scaling factor";
   algorithm
-    V_adj := sV * (V + V_off);
+    V_adj := sV * (v + V_off);
     if V_adj == 0 then
       dn := sV; // using L'Hôpital to find limit for V_adj->0
     else
@@ -145,12 +145,12 @@ package Components
     replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open conformation";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
-    input Real V(unit="mV") "membrane potential (as displacement from resting potential)";
+    input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
     TemperatureInput T;
   protected
     Real phi = 3^((T-6.3)/10);
   equation
-    der(n) = phi * (falpha(V) * (1 - n) - fbeta(V) * n);
+    der(n) = phi * (falpha(v) * (1 - n) - fbeta(v) * n);
   end Gate;
 
   partial model IonChannel "ionic current through the membrane"
@@ -160,7 +160,7 @@ package Components
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
-    p.I = G * (V - V_eq);
+    p.i = G * (v - V_eq);
   end IonChannel;
 
   partial model GatedIonChannel "ion channel that has voltage-dependent gates"
@@ -175,7 +175,7 @@ package Components
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      V=V, T=T
+      v=v, T=T
     ) "activation gate";
   equation
     G = G_max * gate_act.n ^ 4;
@@ -188,12 +188,12 @@ package Components
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      V=V, T=T
+      v=v, T=T
     ) "activation gate";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      V=V, T=T
+      v=v, T=T
     ) "inactivation gate";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
@@ -214,22 +214,22 @@ package Components
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
     parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
-    V = V_init;
+    v = V_init;
   equation
-    der(V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
+    der(v) = 1000 * p.i / C; // multiply with 1000 to get mV/s instead of v/s
   end LipidBilayer;
 
   model ConstantCurrent
     extends TwoPinComponent;
-    parameter Real I;
+    parameter Real i;
   equation
-    p.I = I;
+    p.i = i;
   end ConstantCurrent;
 
   model Ground
     PositivePin p;
   equation
-    p.V = 0;
+    p.v = 0;
   end Ground;
 
   model Membrane
@@ -257,10 +257,10 @@ package Components
     extends HHmodelica.Icons.CurrentClamp;
     PositivePin ext "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin int "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
-    parameter Real I = 40 "current applied to membrane";
-    ConstantCurrent cur(I=I) "external current applied to membrane";
+    parameter Real i = 40 "current applied to membrane";
+    ConstantCurrent cur(i=i) "external current applied to membrane";
     Ground g;
-    Real V = -int.V "measured membrane potential";
+    Real v = -int.v "measured membrane potential";
   equation
     connect(ext, cur.p);
     connect(int, cur.n);

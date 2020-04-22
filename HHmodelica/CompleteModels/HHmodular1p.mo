@@ -3,9 +3,9 @@ model HHmodular1p
   import HHmodelica.Components.OnePin.Membrane;
   import HHmodelica.Components.OnePin.ConstantCurrent;
   Membrane m;
-  // I = 40 => recurring depolarizations
-  // I = 0 => V returns to 0
-  ConstantCurrent ext(I=40) "external current applied to membrane";
+  // i = 40 => recurring depolarizations
+  // i = 0 => v returns to 0
+  ConstantCurrent ext(i=40) "external current applied to membrane";
 equation
   connect(m.p, ext.p);
 annotation(

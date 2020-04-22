@@ -6,7 +6,7 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     parameter Real V_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real G_max(unit="mmho/cm2") "maximum conductance";
   equation
-    p.I = G * (p.V - V_eq);
+    p.i = G * (p.v - V_eq);
   end IonChannel;
 
   partial model GatedIonChannel
@@ -19,7 +19,7 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
-      V= p.V, T= T
+      v= p.v, T= T
     ) "actiaction gate (A = open, B = closed)";
   equation
     G = G_max * gate_act.n ^ 4;
@@ -30,12 +30,12 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     Gate gate_act(
       redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
-      V= p.V, T= T
+      v= p.v, T= T
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
       redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
       redeclare function fbeta= decliningLogisticFit(x0=-30, k=0.1, L=1000),
-      V= p.V, T= T
+      v= p.v, T= T
     ) "inactivation gate (A = closed, b = open)";
   equation
     G = G_max * gate_act.n ^ 3 * gate_inact.n;
@@ -54,16 +54,16 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     parameter Real C(unit="uF/cm2") = 1 "membrane capacitance";
     parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
-    p.V = V_init;
+    p.v = V_init;
   equation
-    der(p.V) = 1000 * p.I / C; // multiply with 1000 to get mV/s instead of V/s
+    der(p.v) = 1000 * p.i / C; // multiply with 1000 to get mV/s instead of v/s
   end LipidBilayer;
 
   model ConstantCurrent
-    parameter Real I;
+    parameter Real i;
     ElectricalPin p;
   equation
-    p.I = I;
+    p.i = i;
   end ConstantCurrent;
 
   model Membrane
