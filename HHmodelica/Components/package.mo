@@ -144,7 +144,7 @@ package Components
 
   // TODO: better use "fopen" and "fclose" than "falpha" and "fbeta"
   model Gate "gating molecule with an open conformation and a closed conformation"
-    replaceable function falpha = goldmanFit(v_off=0, sdn=1, sV=1) "rate of transfer from closed to open conformation";
+    replaceable function falpha = scaledExpFit(x0=0, sy=1, sx=1) "rate of transfer from closed to open conformation";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
