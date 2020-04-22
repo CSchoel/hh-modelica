@@ -89,14 +89,14 @@ package Components
     v = p.v - n.v;
   end TwoPinComponent;
 
-  function scaledExpFit "exponential function with scaling parameters for x and y axis"
+  function expFit "exponential function with scaling parameters for x and y axis"
     input Real x "input value";
     input Real sx "scaling factor for x axis (fitting parameter)";
     input Real sy "scaling factor for y axis (fitting parameter)";
     output Real y "result";
   algorithm
     y := sy * exp(sx * x);
-  end scaledExpFit;
+  end expFit;
 
   function goldmanFit "fitting function related to Goldmans formula for the movement of a charged particle in a constant electrical field"
     input Real x "membrane potential (as displacement from resting potential)";
@@ -144,8 +144,8 @@ package Components
 
   // TODO: better use "fopen" and "fclose" than "falpha" and "fbeta"
   model Gate "gating molecule with an open conformation and a closed conformation"
-    replaceable function falpha = scaledExpFit(x0=0, sy=1, sx=1) "rate of transfer from closed to open conformation";
-    replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
+    replaceable function falpha = expFit(x0=0, sy=1, sx=1) "rate of transfer from closed to open conformation";
+    replaceable function fbeta = expFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
     TemperatureInput temp;
@@ -176,7 +176,7 @@ package Components
     extends HHmodelica.Icons.Activatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(x0=-10, sy=100, sx=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
+      redeclare function fbeta= expFit(sx=1/80, sy=125),
       v=v, temp=temp
     ) "activation gate";
   equation
@@ -189,11 +189,11 @@ package Components
     extends HHmodelica.Icons.Inactivatable;
     Gate gate_act(
       redeclare function falpha= goldmanFit(x0=-25, sy=1000, sx=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
+      redeclare function fbeta= expFit(sx=1/18, sy=4000),
       v=v, temp=temp
     ) "activation gate";
     Gate gate_inact(
-      redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
+      redeclare function falpha= expFit(sx=1/20, sy=70),
       redeclare function fbeta= logisticFit(x0=-30, sx=-0.1, y_max=1000),
       v=v, temp=temp
     ) "inactivation gate";

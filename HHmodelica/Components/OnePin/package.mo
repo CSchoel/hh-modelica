@@ -18,7 +18,7 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     extends GatedIonChannel(g_max=36, v_eq=12);
     Gate gate_act(
       redeclare function falpha= goldmanFit(x0=-10, sy=100, sx=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
+      redeclare function fbeta= expFit(sx=1/80, sy=125),
       v= p.v, temp= temp
     ) "actiaction gate (A = open, B = closed)";
   equation
@@ -29,11 +29,11 @@ package OnePin "simplified modular variant that is closer to equations, but fart
     extends GatedIonChannel(g_max=120, v_eq=-115);
     Gate gate_act(
       redeclare function falpha= goldmanFit(x0=-25, sy=1000, sx=0.1),
-      redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
+      redeclare function fbeta= expFit(sx=1/18, sy=4000),
       v= p.v, temp= temp
     ) "activation gate (A = open, B = closed)";
     Gate gate_inact(
-      redeclare function falpha= scaledExpFit(sx=1/20, sy=70),
+      redeclare function falpha= expFit(sx=1/20, sy=70),
       redeclare function fbeta= logisticFit(x0=-30, sx=-0.1, y_max=1000),
       v= p.v, temp= temp
     ) "inactivation gate (A = closed, b = open)";
