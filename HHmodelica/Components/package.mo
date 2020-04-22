@@ -107,7 +107,7 @@ package Components
   protected
     Real V_adj "adjusted v with offset and scaling factor";
   algorithm
-    V_adj := sV * (v + V_off);
+    V_adj := sV * (v + v_off);
     if V_adj == 0 then
       dn := sV; // using L'Hôpital to find limit for V_adj->0
     else
@@ -142,7 +142,7 @@ package Components
 
   // TODO: better use "fopen" and "fclose" than "falpha" and "fbeta"
   model Gate "gating molecule with an open conformation and a closed conformation"
-    replaceable function falpha = goldmanFit(V_off=0, sdn=1, sV=1) "rate of transfer from closed to open conformation";
+    replaceable function falpha = goldmanFit(v_off=0, sdn=1, sV=1) "rate of transfer from closed to open conformation";
     replaceable function fbeta = scaledExpFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
@@ -173,7 +173,7 @@ package Components
     extends GatedIonChannel(g_max=36, v_eq=12);
     extends HHmodelica.Icons.Activatable;
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=10, sdn=100, sV=0.1),
+      redeclare function falpha= goldmanFit(v_off=10, sdn=100, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/80, sy=125),
       v=v, temp=temp
     ) "activation gate";
@@ -186,7 +186,7 @@ package Components
     extends HHmodelica.Icons.Activatable;
     extends HHmodelica.Icons.Inactivatable;
     Gate gate_act(
-      redeclare function falpha= goldmanFit(V_off=25, sdn=1000, sV=0.1),
+      redeclare function falpha= goldmanFit(v_off=25, sdn=1000, sV=0.1),
       redeclare function fbeta= scaledExpFit(sx=1/18, sy=4000),
       v=v, temp=temp
     ) "activation gate";
