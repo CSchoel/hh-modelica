@@ -40,7 +40,7 @@ package Components
     Real v(unit="mV") "membrane potential (as displacement from resting potential)";
   end ElectricalPin;
 
-  connector PositivePin
+  connector PositivePin "electrical pin with filled square icon for visual distinction"
     extends ElectricalPin;
     annotation(
       Icon(
@@ -60,7 +60,7 @@ package Components
     );
   end PositivePin;
 
-  connector NegativePin
+  connector NegativePin "electrical pin with open square icon for visual distinction"
     extends ElectricalPin;
     annotation(
       Icon(
@@ -80,13 +80,26 @@ package Components
     );
   end NegativePin;
 
-  partial model TwoPinComponent
-    PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
-    NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
-    Real v(unit="mV");
+  partial model TwoPinComponent "component with two directly connected electrical pins"
+    PositivePin p "positive extracellular pin" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin n "negative intracellular pin" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
+    Real v(unit="mV") "voltage as potential difference between positive and negative pin";
   equation
     0 = p.i + n.i;
     v = p.v - n.v;
+    annotation(
+      Documentation(info="
+        <html>
+          <p>This is a base model for components with two electrical pins which
+          are directly connected. It establishes the connection and defines a
+          voltage between the positive and negative pin, but does not specify
+          the current-voltage relationship.</p>
+          <p>This base component establishes the convention that positive
+          currents are outward currents and negative currents are inward
+          currents.</p>
+        </html>
+      ")
+    );
   end TwoPinComponent;
 
   function expFit "exponential function with scaling parameters for x and y axis"
@@ -121,15 +134,28 @@ package Components
           by Goldman (1943) for the movements of a charged particle in a constant
           field&quot;.</p>
           <p>We suppose that this statement refers to equation 11 of Goldman
-          (1943) when n_i' is zero.</p>
+          (1943), which is also called the Goldman-Hodgkin-Katz flux equation:</p>
+          <blockquote>
+            j_i = u_i * F / a * dV * (n'_i * exp(-z_i * beta * dV - n0_i)) / exp(-z_i * beta * dV)
+          </blockquote>
+          <p>Factoring out n0_i from the denominator, substituting
+          n'_i/n0_i = exp(V_0 * beta * z_i) and grouping and renaming
+          variables, the GHK flux equation can be written as</p>
+          <blockquote>
+            y := sy * sx * x * (exp((x - x0) * sx) - 1) / (exp(x * sx) - 1)
+          </blockquote>
+          <p>with sx = -z_i * beta, x = dV, x0 = V_0, and
+          sy = n0_i * u_i * F / a * 1 / sx.</p>
+          <p>With this notation, the similarity becomes apparent, as omitting
+          the denominator (exp((x - x0) * sx) - 1) and using x-x0 instead of
+          x in the rest of the formula gives exactly the goldmanFit used by
+          Hodgkin and Huxley.</p>
         </html>
       ")
     );
-    // TODO not so sure about where that reference to goldman comes from anymore
-    // => compare with ghkFlux again
   end goldmanFit;
 
-  function logisticFit "logistic function with flipped x-axis"
+  function logisticFit "logistic function with sigmoidal shape"
     input Real x "input value";
     input Real x0 "x-value of sigmoid midpoint (fitting parameter)";
     input Real sx "growth rate/steepness (fitting parameter)";
@@ -148,9 +174,9 @@ package Components
     replaceable function fbeta = expFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=falpha(0)/(falpha(0) + fbeta(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
-    TemperatureInput temp;
+    TemperatureInput temp "membrane temperature";
   protected
-    Real phi = 3^((temp-6.3)/10);
+    Real phi = 3^((temp-6.3)/10) "temperature-dependent factor for rate of transfer calculated with Q10 = 3";
   equation
     der(n) = phi * (falpha(v) * (1 - n) - fbeta(v) * n);
   end Gate;
@@ -158,7 +184,7 @@ package Components
   partial model IonChannel "ionic current through the membrane"
     extends TwoPinComponent;
     extends HHmodelica.Icons.IonChannel;
-    Real g(unit="mmho/cm2") "ion conductance";
+    Real g(unit="mmho/cm2") "ion conductance, needs to be defined in subclasses";
     parameter Real v_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real g_max(unit="mmho/cm2") "maximum conductance";
   equation
@@ -171,7 +197,7 @@ package Components
       annotation (Placement(transformation(extent={{-40, 48},{-60, 68}})));
   end GatedIonChannel;
 
-  model PotassiumChannel "channel selective for K+ ions"
+  model PotassiumChannel "channel selective for K+ cations"
     extends GatedIonChannel(g_max=36, v_eq=12);
     extends HHmodelica.Icons.Activatable;
     Gate gate_act(
@@ -183,7 +209,7 @@ package Components
     g = g_max * gate_act.n ^ 4;
   end PotassiumChannel;
 
-  model SodiumChannel "channel selective for Na+ ions"
+  model SodiumChannel "channel selective for Na+ cations"
     extends GatedIonChannel(g_max=120, v_eq=-115);
     extends HHmodelica.Icons.Activatable;
     extends HHmodelica.Icons.Inactivatable;
@@ -212,7 +238,7 @@ package Components
     extends TwoPinComponent;
     extends HHmodelica.Icons.LipidBilayer;
     TemperatureOutput temp = temp_m annotation (Placement(transformation(extent={{40, 48},{60, 68}})));
-    parameter Real temp_m(unit="degC") = 6.3 "membrane temperature";
+    parameter Real temp_m(unit="degC") = 6.3 "constant membrane temperature";
     parameter Real c(unit="uF/cm2") = 1 "membrane capacitance";
     parameter Real V_init(unit="mV") = -90 "short initial stimulation";
   initial equation
@@ -221,27 +247,27 @@ package Components
     der(v) = 1000 * p.i / c; // multiply with 1000 to get mV/s instead of v/s
   end LipidBilayer;
 
-  model ConstantCurrent
+  model ConstantCurrent "applies current to positive pin regardless of voltage"
     extends TwoPinComponent;
-    parameter Real i;
+    parameter Real i_const(unit="uA/cm2") "current applied to positive pin";
   equation
     p.i = i;
   end ConstantCurrent;
 
-  model Ground
+  model Ground "sets voltage to zero, acting as a reference for measuring potential"
     PositivePin p;
   equation
     p.v = 0;
   end Ground;
 
-  model Membrane
+  model Membrane "full membrane model that can be used in current clamp experiments"
     extends HHmodelica.Icons.LipidBilayer;
-    PositivePin p annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
-    NegativePin n annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
+    PositivePin p "positive extracellular pin" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
+    NegativePin n "negative intracellular pin" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    LipidBilayer l;
+    LipidBilayer l "lipid bilayer as capacitor";
   equation
     connect(c_pot.p, l.p);
     connect(c_pot.n, l.n);
@@ -255,13 +281,13 @@ package Components
     connect(c_sod.temp, l.temp);
   end Membrane;
 
-  model CurrentClamp
+  model CurrentClamp "current clamp that applies constant current to the membrane"
     extends HHmodelica.Icons.CurrentClamp;
     PositivePin p "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin n "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     parameter Real i = 40 "current applied to membrane";
     ConstantCurrent cur(i=i) "external current applied to membrane";
-    Ground g;
+    Ground g "reference electrode";
     Real v = -n.v "measured membrane potential";
   equation
     connect(p, cur.p);
