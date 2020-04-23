@@ -20,7 +20,7 @@ package OnePin "simplified modular variant that is closer to equations, but fart
       redeclare function fopen= goldmanFit(x0=-10, sy=100, sx=0.1),
       redeclare function fclose= expFit(sx=1/80, sy=125),
       v= p.v, temp= temp
-    ) "actiaction gate (A = open, B = closed)";
+    ) "actiaction gate";
   equation
     g = g_max * gate_act.n ^ 4;
   end PotassiumChannel;
@@ -31,12 +31,12 @@ package OnePin "simplified modular variant that is closer to equations, but fart
       redeclare function fopen= goldmanFit(x0=-25, sy=1000, sx=0.1),
       redeclare function fclose= expFit(sx=1/18, sy=4000),
       v= p.v, temp= temp
-    ) "activation gate (A = open, B = closed)";
+    ) "activation gate";
     Gate gate_inact(
       redeclare function fopen= expFit(sx=1/20, sy=70),
       redeclare function fclose= logisticFit(x0=-30, sx=-0.1, y_max=1000),
       v= p.v, temp= temp
-    ) "inactivation gate (A = closed, b = open)";
+    ) "inactivation gate";
   equation
     g = g_max * gate_act.n ^ 3 * gate_inact.n;
   end SodiumChannel;
