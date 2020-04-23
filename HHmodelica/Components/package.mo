@@ -1,5 +1,5 @@
 within HHmodelica;
-package Components
+package Components "components for the two-pin modular version of the Hodgkin-Huxley model"
   connector TemperatureInput = input Real(unit="degC") "membrane temperature"
     annotation(
       Icon(
