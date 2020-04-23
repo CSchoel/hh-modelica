@@ -84,7 +84,9 @@ package Components
     PositivePin p "positive extracellular pin" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin n "negative intracellular pin" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
     Real v(unit="mV") "voltage as potential difference between positive and negative pin";
+    Real i(unit="uA/cm2") "outward current flowing through component from negative to positive pin";
   equation
+    i = p.i;
     0 = p.i + n.i;
     v = p.v - n.v;
     annotation(
@@ -188,7 +190,7 @@ package Components
     parameter Real v_eq(unit="mV") "equilibrium potential (as displacement from resting potential)";
     parameter Real g_max(unit="mmho/cm2") "maximum conductance";
   equation
-    p.i = g * (v - v_eq);
+    i = g * (v - v_eq);
   end IonChannel;
 
   partial model GatedIonChannel "ion channel that has voltage-dependent gates"
@@ -244,14 +246,14 @@ package Components
   initial equation
     v = V_init;
   equation
-    der(v) = 1000 * p.i / c; // multiply with 1000 to get mV/s instead of v/s
+    der(v) = 1000 * i / c "multiply with 1000 to get mV/s instead of v/s";
   end LipidBilayer;
 
   model ConstantCurrent "applies current to positive pin regardless of voltage"
     extends TwoPinComponent;
     parameter Real i_const(unit="uA/cm2") "current applied to positive pin";
   equation
-    p.i = i;
+    i = i_const;
   end ConstantCurrent;
 
   model Ground "sets voltage to zero, acting as a reference for measuring potential"
