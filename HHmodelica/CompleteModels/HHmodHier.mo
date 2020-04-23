@@ -5,7 +5,7 @@ model HHmodHier
   Membrane m;
   // i = 40 => recurring depolarizations
   // i = 0 => v returns to 0
-  CurrentClamp c(i=40);
+  CurrentClamp c(i_const=40);
 equation
   connect(m.p, c.p);
   connect(m.n, c.n);
