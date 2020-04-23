@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model IonChannel
+model IonChannel "base model for ion channel with gap in lipid bilayer"
 annotation(
   Icon(
     coordinateSystem(

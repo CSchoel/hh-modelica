@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model Activatable
+model Activatable "pore that is open on the inside and closed on the outside"
 annotation(
   Icon(
     coordinateSystem(

@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model LipidBilayer
+model LipidBilayer "lipid bilayer with red circles on outside and black lines on inside"
 annotation(
   Icon(
     coordinateSystem(

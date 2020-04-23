@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model CurrentClamp
+model CurrentClamp "two electrodes sticking through lipid bilayer"
 annotation(
   Icon(
     coordinateSystem(

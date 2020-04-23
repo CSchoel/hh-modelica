@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model OpenChannel
+model OpenChannel "pore that is open on both sides"
 annotation(
   Icon(
     coordinateSystem(

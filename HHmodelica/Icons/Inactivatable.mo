@@ -1,5 +1,5 @@
 within HHmodelica.Icons;
-model Inactivatable
+model Inactivatable "hinged lid for ion channel"
 annotation(
   Icon(
     coordinateSystem(
