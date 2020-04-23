@@ -5,5 +5,5 @@
 
 [submodule "hh-modelica-ref"]
 	path = regRefData
-	url = git@github.com:CSchoel/hh-modelica-ref.git
+	url = https://github.com/CSchoel/hh-modelica.git
 	shallow = true
