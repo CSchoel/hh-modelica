@@ -8,6 +8,7 @@ cd(moroot)
 # ugly workaround for using latest OMJulia with libgit2-julia incompatibility
 using Pkg
 Pkg.activate("3rdparty/OMJulia.jl")
+Pkg.instantiate()
 # end of ugly workaround
 using OMJulia
 
