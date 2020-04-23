@@ -287,10 +287,10 @@ package Components
     extends HHmodelica.Icons.CurrentClamp;
     PositivePin p "extracellular electrode" annotation (Placement(transformation(extent={{-10, 90},{10, 110}})));
     NegativePin n "intracellular electrode(s)" annotation (Placement(transformation(extent={{-10, -90},{10, -110}})));
-    parameter Real i_const = 40 "current applied to membrane";
+    parameter Real i_const(unit="uA/cm2") = 40 "current applied to membrane";
     ConstantCurrent cur(i_const=i_const) "external current applied to membrane";
     Ground g "reference electrode";
-    Real v = -n.v "measured membrane potential";
+    Real v(unit="mV") = -n.v "measured membrane potential";
   equation
     connect(p, cur.p);
     connect(n, cur.n);
