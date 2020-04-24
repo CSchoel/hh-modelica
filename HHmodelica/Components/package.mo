@@ -171,7 +171,7 @@ package Components "components for the two-pin modular version of the Hodgkin-Hu
   end logisticFit;
 
   model Gate "gating molecule with an open conformation and a closed conformation"
-    replaceable function fopen = expFit(x0=0, sy=1, sx=1) "rate of transfer from closed to open conformation";
+    replaceable function fopen = expFit(sx=1, sy=1) "rate of transfer from closed to open conformation";
     replaceable function fclose = expFit(sx=1, sy=1) "rate of transfer from open to closed conformation";
     Real n(start=fopen(0)/(fopen(0) + fclose(0)), fixed=true) "ratio of molecules in open conformation";
     input Real v(unit="mV") "membrane potential (as displacement from resting potential)";
