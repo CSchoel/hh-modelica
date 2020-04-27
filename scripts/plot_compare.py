@@ -10,7 +10,7 @@ def compare(afile, bfile):
     ax.plot(adata["time"] * 1000, -adata["clamp.v"], label="modular")
     ax.plot(bdata["time"], -bdata["v"], "--", label="monolithic")
     ax.set_xlabel("time [ms]")
-    ax.set_ylabel("voltage [mV]")
+    ax.set_ylabel("displacement from\nresting potential [mV]")
     ax.legend(loc="best")
     f.tight_layout()
     if not os.path.exists("plots"):
