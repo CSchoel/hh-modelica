@@ -5,7 +5,7 @@ import os
 
 def compare(afile, bfile):
     adata, bdata = [pd.read_csv(x, delimiter=",") for x in [afile, bfile]]
-    f = plt.figure(figsize=(6,2))
+    f = plt.figure(figsize=(6, 2))
     ax = f.add_subplot()
     ax.plot(adata["time"] * 1000, adata["currentClamp.v"], label="modular")
     ax.plot(bdata["time"], bdata["v"], "--", label="monolithic")
@@ -17,6 +17,7 @@ def compare(afile, bfile):
         os.mkdir("plots")
     f.savefig("plots/modular_vs_monolithic.pdf")
     f.savefig("plots/modular_vs_monolithic.png")
+
 
 if __name__ == "__main__":
     compare(
