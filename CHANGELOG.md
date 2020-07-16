@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [nothing]
 
 ## [1.0.1]
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3947849.svg)](https://doi.org/10.5281/zenodo.3947849)
+
 
 ### Added
 

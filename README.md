@@ -1,6 +1,7 @@
 # HH-Modelica
 
 [![Build Status](https://travis-ci.com/CSchoel/hh-modelica.svg?branch=master)](https://travis-ci.com/CSchoel/hh-modelica)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3947849.svg)](https://doi.org/10.5281/zenodo.3947849)
 
 This repository contains a modular implementation of the [Hodgkin-Huxley equations](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) that has two aims:
 
