@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - this version was submitted to IEEE Transactions on Biomedical Engineering (rejected)
 
-## [0.9]
+## [0.9.0]
 
 ### Added
 
