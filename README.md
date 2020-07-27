@@ -35,21 +35,18 @@ To simulate the models in this repository you can use the following steps:
 * `HHmodelica/Components/OnePin/package.mo` contains components used for the one-pin model `HHmodular1p.mo`.
 * `HHmodelica/Components/Icons` contains empty models with graphical annotations that are used to give a graphical representation to modular model components.
 * `img` contains SVG images that were used to create the graphical annotations for the component icons (with a currently unpublished Inkscape plugin).
-* `3rdparty/OMJulia.jl` is a submodule that links to the [repository of OMJulia](https://github.com/OpenModelica/OMJulia.jl) - a Julia library for communicating with the ZMQ interface of the OpenModelica compiler.
-      It is required in this form because of two bugs (see Testing below).
 * `regRefData` is a submodule that links to the repository [HH-modelica-ref](https://github.com/CSchoel/hh-modelica-ref) which contains reference data for the regression tests (see below).
 * `scripts` contains scripts for testing and plotting (see below).
 
 ## Testing
 
 The file `scripts/unittests.jl` contains a Julia script that uses [OMJulia](https://github.com/OpenModelica/OMJulia.jl) to interface with the OpenModelica compiler.
-You can use it by calling `julia unittests.jl`, but you will need the latest version of OMJulia that is not yet released as an official package update.
-This is not trivial, since currently [Julia 1.3 cannot install packages from a GitHub repository](https://github.com/JuliaLang/julia/issues/33111) and we therefore have to install and activate a local copy of OMJulia.
-The test script and this repository contain everything that you need, but you will have to call `git submodule update --init` once, to clone the OMJulia repo to the `3rdparty` directory.
+To install all necessary dependencies you have do the following:
 
-TL;DR:
-* `git submodule update --init`
-* `julia scripts/unittests.jl`
+1. Download and install [Julia](https://julialang.org/).
+2. Run the following commands in a terminal from the repository folder:
+  * `julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/THM-MoTE/ModelicaScriptingTools.jl.git"))'`
+  * `julia scripts/unittests.jl`
 
 ### Test output
 

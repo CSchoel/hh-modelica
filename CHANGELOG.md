@@ -12,11 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-[nothing]
+* uses [MoST](https://github.com/THM-MoTE/ModelicaScriptingTools.jl) for test script
 
 ### Fixed
 
-[nothing]
+* unit inconsistency in `HHmono`: currents must be `nA`, not `uA`
 
 ## [1.0.1]
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3947849.svg)](https://doi.org/10.5281/zenodo.3947849)
