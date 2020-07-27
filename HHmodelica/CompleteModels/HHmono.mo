@@ -100,6 +100,6 @@ equation
 annotation(
     experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
     __OpenModelica_simulationFlags(s = "dassl"),
-    __ChrisS_testing(testedVariableFilter="v|gK|gNa|n|m|h")
+    __MoST_experiment(variableFilter="v|gK|gNa|n|m|h")
 );
 end HHmono;
