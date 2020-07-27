@@ -34,6 +34,6 @@ equation
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
   __OpenModelica_simulationFlags(s = "dassl"),
-  __ChrisS_testing(testedVariableFilter="clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)")
+  __MoST_experiment(variableFilter="clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)")
 );
 end HHmodular;
