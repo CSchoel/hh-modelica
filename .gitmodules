@@ -1,8 +1,3 @@
-[submodule "OMJulia"]
-	path = 3rdparty/OMJulia.jl
-	url = https://github.com/OpenModelica/OMJulia.jl
-	shallow = true
-
 [submodule "hh-modelica-ref"]
 	path = regRefData
 	url = https://github.com/CSchoel/hh-modelica-ref.git
