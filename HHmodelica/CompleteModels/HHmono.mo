@@ -19,15 +19,15 @@ model HHmono "monolithic version of the Hodgkin-Huxley model"
   parameter Real alphah0 (unit="1/msec") = 0.07;
   parameter Real betah0  (unit="1/msec") = 1/(exp(3)+1);
 
-  parameter Real minusI(unit = "uA/cm2") = 40;
+  parameter Real minusI(unit = "nA/cm2") = 40;
   input Real Vclamp(unit = "mV");
 
   parameter Real clamp_0no_1yes = 0;
 
   //Variables for all the algebraic equations
-  Real INa(unit = "uA/cm2") "Ionic currents";
-  Real IK(unit = "uA/cm2") "Ionic currents";
-  Real Il(unit = "uA/cm2") "Ionic currents";
+  Real INa(unit = "nA/cm2") "Ionic currents";
+  Real IK(unit = "nA/cm2") "Ionic currents";
+  Real Il(unit = "nA/cm2") "Ionic currents";
   Real alphan(unit = "1/msec")  "rate constant of particles from out to in";
   Real betan(unit = "1/msec")   "rate constant from in to out";
   Real alpham(unit = "1/msec")  "rate constant of activating molecules from out to in";
@@ -36,7 +36,7 @@ model HHmono "monolithic version of the Hodgkin-Huxley model"
   Real betah(unit = "1/msec")   "rate constant of inactivating molecules from in to out";
   Real gNa(unit = "mmho/cm2")   "Sodium conductance";
   Real gK(unit = "mmho/cm2")    "potassium conductance";
-  Real Iion(unit = "uA/cm^2");
+  Real Iion(unit = "nA/cm2");
 
   //State variables for all the ODEs
   Real VV(unit="mV");
