@@ -7,11 +7,12 @@ def compare(afile, bfile):
     adata, bdata = [pd.read_csv(x, delimiter=",") for x in [afile, bfile]]
     f = plt.figure(figsize=(6, 2), dpi=300)
     ax = f.add_subplot()
-    ax.plot(adata["time"] * 1000, -adata["clamp.v"], label="modular")
-    ax.plot(bdata["time"], -bdata["v"], "--", label="monolithic")
+    ax.plot(adata["time"] * 1000, adata["v_m"], label="modular")
+    ax.plot(bdata["time"], bdata["v_m"], "--", label="monolithic")
     ax.set_xlabel("time [ms]")
-    ax.set_ylabel("displacement from\nresting potential [mV]")
+    ax.set_ylabel("membrane\npotential [mV]")
     ax.legend(loc="best")
+    ax.set_xlim(0, max(bdata["time"]))
     f.tight_layout()
     if not os.path.exists("plots"):
         os.mkdir("plots")

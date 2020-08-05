@@ -1,5 +1,7 @@
 within HHmodelica.CompleteModels;
 model HHmodular "'flat' version of the modular model (no membrane container)"
+  parameter Real e_r(unit="mV") = -75 "resting potential";
+  Real v_m(unit="mV") = e_r - l2.v "absolute membrane potential (v_in - v_out)";
   HHmodelica.Components.PotassiumChannel c_pot annotation(
     Placement(visible = true, transformation(origin = {-33, 3}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
   HHmodelica.Components.SodiumChannel c_sod annotation(
@@ -34,6 +36,6 @@ equation
 annotation(
   experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
   __OpenModelica_simulationFlags(s = "dassl"),
-  __MoST_experiment(variableFilter="clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)")
+  __MoST_experiment(variableFilter="v_m|clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)")
 );
 end HHmodular;

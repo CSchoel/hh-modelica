@@ -1,5 +1,7 @@
 within HHmodelica.CompleteModels;
 model HHmono "monolithic version of the Hodgkin-Huxley model"
+  parameter Real e_r(unit="mV") = -75 "resting potential";
+  Real v_m(unit="mV") = e_r - v "absolute membrane potential (v_in - v_out)";
   parameter Real Cm(unit = "uF/cm2")       = 1;
   parameter Real gbarNa(unit = "mmho/cm2")   = 120 "max sodium conductance";
   parameter Real gbarK(unit = "mmho/cm2")    = 36 "max potassium conductance";
@@ -100,6 +102,6 @@ equation
 annotation(
     experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
     __OpenModelica_simulationFlags(s = "dassl"),
-    __MoST_experiment(variableFilter="v|gK|gNa|n|m|h")
+    __MoST_experiment(variableFilter="v_m|v|gK|gNa|n|m|h")
 );
 end HHmono;
