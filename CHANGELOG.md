@@ -8,11 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-[nothing]
+* variable `v_m` in `HHmodular` and `HHmono` that captures absolute membrane potential as difference between inside and outside potential for plotting
 
 ### Changed
 
 * uses [MoST](https://github.com/THM-MoTE/ModelicaScriptingTools.jl) for test script
+* plot now displays `v_m` instead of `v` with opposite sign
 
 ### Fixed
 
