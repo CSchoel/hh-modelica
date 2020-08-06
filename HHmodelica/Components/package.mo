@@ -268,18 +268,18 @@ package Components "components for the two-pin modular version of the Hodgkin-Hu
     PotassiumChannel c_pot;
     SodiumChannel c_sod;
     LeakChannel c_leak;
-    LipidBilayer l "lipid bilayer as capacitor";
+    LipidBilayer l2 "lipid bilayer as capacitor";
   equation
-    connect(c_pot.p, l.p);
-    connect(c_pot.n, l.n);
-    connect(c_sod.p, l.p);
-    connect(c_sod.n, l.n);
-    connect(c_leak.p, l.p);
-    connect(c_leak.n, l.n);
-    connect(p, l.p);
-    connect(n, l.n);
-    connect(c_pot.temp, l.temp);
-    connect(c_sod.temp, l.temp);
+    connect(c_pot.p, l2.p);
+    connect(c_pot.n, l2.n);
+    connect(c_sod.p, l2.p);
+    connect(c_sod.n, l2.n);
+    connect(c_leak.p, l2.p);
+    connect(c_leak.n, l2.n);
+    connect(p, l2.p);
+    connect(n, l2.n);
+    connect(c_pot.temp, l2.temp);
+    connect(c_sod.temp, l2.temp);
   end Membrane;
 
   model CurrentClamp "current clamp that applies constant current to the membrane"
