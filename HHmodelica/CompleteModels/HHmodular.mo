@@ -1,7 +1,6 @@
 within HHmodelica.CompleteModels;
 model HHmodular "'flat' version of the modular model (no membrane container)"
-  parameter Real e_r(unit="mV") = -75 "resting potential";
-  Real v_m(unit="mV") = e_r - l2.v "absolute membrane potential (v_in - v_out)";
+  extends PotentialAdapter(v = l2.v);
   HHmodelica.Components.PotassiumChannel c_pot annotation(
     Placement(visible = true, transformation(origin = {-33, 3}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
   HHmodelica.Components.SodiumChannel c_sod annotation(

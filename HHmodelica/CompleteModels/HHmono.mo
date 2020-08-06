@@ -1,5 +1,6 @@
 within HHmodelica.CompleteModels;
 model HHmono "monolithic version of the Hodgkin-Huxley model"
+  extends PotentialAdapter;
   parameter Real e_r(unit="mV") = -75 "resting potential";
   Real v_m(unit="mV") = e_r - v "absolute membrane potential (v_in - v_out)";
   parameter Real Cm(unit = "uF/cm2")       = 1;

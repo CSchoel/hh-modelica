@@ -1,5 +1,6 @@
 within HHmodelica.CompleteModels;
 model HHmodHier
+  extends PotentialAdapter(v = m.l2.v);
   import HHmodelica.Components.Membrane;
   import HHmodelica.Components.CurrentClamp;
   Membrane m;
