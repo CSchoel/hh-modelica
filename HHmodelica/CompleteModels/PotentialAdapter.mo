@@ -20,7 +20,7 @@ partial model PotentialAdapter "base class that converts membrane potential to c
         because this is the value that is used by the BioModels implementation of
         the Hodgkin-Huxley model and corresponds to the resting potential
         measured for the squid giant axon <i>in vivo</i>
-        (cf. Moore and Cole, 1960).</p>
+        (cf. Moore and Cole, 1960, https://doi.org/10.1085/jgp.43.5.961).</p>
       </html>
     ")
   );
