@@ -147,8 +147,10 @@ version = "0.4.3"
 uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 
 [[ModelicaScriptingTools]]
-deps = ["CSV", "DataFrames", "Documenter", "OMJulia", "PyCall", "Test", "ZMQ"]
-path = "../../MoST"
+deps = ["CSV", "DataFrames", "Documenter", "Markdown", "OMJulia", "PyCall", "Test", "ZMQ"]
+git-tree-sha1 = "0a82fa5df52ac294c80c04a9faafe1e298b3e667"
+repo-rev = "master"
+repo-url = "https://github.com/THM-MoTE/ModelicaScriptingTools.jl.git"
 uuid = "9bd7ba1c-b518-491f-8f72-7efe190322aa"
 version = "1.0.0"
 
