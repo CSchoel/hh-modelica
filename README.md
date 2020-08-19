@@ -8,6 +8,10 @@ This repository contains a modular implementation of the [Hodgkin-Huxley equatio
 1. Increase the understandability of the Hodgkin-Huxley model for novices by keeping the amount of variables and equations per component very low and bridging the gap between biological meaning and electrical analogy.
 2. Serve as a unifying basis for extensions by experts and therefore facilitate the creation of more complex Hogdkin-Huxley-type models.
 
+## Documentation
+
+A HTML [documentation of the model](https://cschoel.github.io/hh-modelica/dev/) can be found on GitHub pages.
+
 ## Quick guide
 
 To simulate the models in this repository you can use the following steps:
