@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * variable `v_m` in `HHmodular` and `HHmono` that captures absolute membrane potential as difference between inside and outside potential for plotting
+* HTML documentation using [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl) with [MoST.jl](https://github.com/THM-MoTE/ModelicaScriptingTools.jl)
 
 ### Changed
 
