@@ -49,7 +49,7 @@ To install all necessary dependencies you have do the following:
 
 1. Download and install [Julia](https://julialang.org/).
 2. Run the following commands in a terminal from the repository folder:
-  * `julia -e 'using Pkg; Pkg.add(PackageSpec(url="https://github.com/THM-MoTE/ModelicaScriptingTools.jl.git"))'`
+  * `julia -e 'ENV["PYTHON"]=""; using Pkg; Pkg.add(PackageSpec(url="https://github.com/THM-MoTE/ModelicaScriptingTools.jl.git"))'`
   * `julia scripts/unittests.jl`
 
 ### Test output
