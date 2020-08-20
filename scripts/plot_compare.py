@@ -18,7 +18,7 @@ def compare(afile, bfile):
         os.mkdir("plots")
     f.savefig("plots/modular_vs_monolithic.pdf")
     f.savefig("plots/modular_vs_monolithic.eps")
-    f.savefig("plots/modular_vs_monolithic.png")
+    f.savefig("plots/modular_vs_monolithic.jpg")
 
 
 if __name__ == "__main__":
