@@ -36,97 +36,24 @@ equation
     experiment(StartTime = 0, StopTime = 0.03, Tolerance = 1e-6, Interval = 1e-05),
     __OpenModelica_simulationFlags(s = &quot;dassl&quot;),
     __MoST_experiment(variableFilter = &quot;v_m|clamp\\.(v|i)|c_pot\\.(g|gate_act\\.n)|c_sod\\.(g|gate_act\\.n|gate_inact\\.n)&quot;));
-end HHmodular;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/MathML">
+end HHmodular;</code></pre><ol>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> v_m 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> e_r 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> l2.v 
 </mi></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><msup><mrow><mrow><mi> c_pot.gate_act.n 
-</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> c_pot.gate_act.phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_pot.gate_act.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> -10.0 
-</mn><mo>,</mo><mn> 0.1 
-</mn><mo>,</mo><mn> 100.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
-</mn><mo>&#8722;</mo><mrow><mi> c_pot.gate_act.n 
-</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_pot.gate_act.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> 0.0125 
-</mn><mo>,</mo><mn> 125.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mi> c_pot.gate_act.n 
-</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mrow><mi> c_pot.g 
-</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> c_pot.g_max 
-</mi></mrow><mo>&#8290;</mo><msup><mrow><mi> c_pot.gate_act.n 
-</mi></mrow><mn> 4.0 
-</mn></msup></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mrow><mi> c_pot.i 
-</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> c_pot.g 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>&#8722;</mo><mrow><mi> c_pot.v_eq 
-</mi></mrow><mo>)</mo></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><msup><mrow><mrow><mi> c_sod.gate_act.n 
-</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> c_sod.gate_act.phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_act.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> -25.0 
-</mn><mo>,</mo><mn> 0.1 
-</mn><mo>,</mo><mn> 1000.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
-</mn><mo>&#8722;</mo><mrow><mi> c_sod.gate_act.n 
-</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_act.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> 0.05555555555555555 
-</mn><mo>,</mo><mn> 4000.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mi> c_sod.gate_act.n 
-</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><msup><mrow><mrow><mi> c_sod.gate_inact.n 
-</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> c_sod.gate_inact.phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_inact.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> 0.05 
-</mn><mo>,</mo><mn> 70.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
-</mn><mo>&#8722;</mo><mrow><mi> c_sod.gate_inact.n 
-</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_inact.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>,</mo><mn> -30.0 
-</mn><mo>,</mo><mn> -0.1 
-</mn><mo>,</mo><mn> 1000.0 
-</mn><mo>)</mo></mrow></mrow><mo>&#8290;</mo><mrow><mi> c_sod.gate_inact.n 
-</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mrow><mi> c_sod.g 
-</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> c_sod.g_max 
-</mi></mrow><mo>&#8290;</mo><mrow><msup><mrow><mi> c_sod.gate_act.n 
-</mi></mrow><mn> 3.0 
-</mn></msup><mo>&#8290;</mo><mrow><mi> c_sod.gate_inact.n 
-</mi></mrow></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
-<mrow><mrow><mi> c_sod.i 
-</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> c_sod.g 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
-</mi></mrow><mo>&#8722;</mo><mrow><mi> c_sod.v_eq 
-</mi></mrow><mo>)</mo></mrow></mrow></mrow>
-</math>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> c_leak.i 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> c_leak.g_max 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> c_leak.v_eq 
 </mi></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><msup><mrow><mrow><mi> l2.v 
 </mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mn> 1000.0 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> l2.i 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> l2.i 
 </mi></mrow><mo>/</mo><mrow><mi> l2.c 
 </mi></mrow></mrow></mrow></mrow>
 </math>
@@ -154,7 +81,66 @@ end HHmodular;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/Math
 </mi></mrow><mo>&#8722;</mo><mrow><mi> clamp.p.i 
 </mi></mrow><mo>)</mo></mrow></mrow><mo>&#8801;</mo><mn> 0.0 
 </mn></mrow>
-</math></ol><table><tr><th style="text-align: right">name</th><th style="text-align: right">unit</th><th style="text-align: right">value</th><th style="text-align: right">label</th></tr><tr><td style="text-align: right">v_m</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">absolute membrane potential (v_in - v_out)</td></tr><tr><td style="text-align: right">c_pot.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">c_pot.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr><tr><td style="text-align: right">c_pot.gate_act.n</td><td style="text-align: right"></td><td style="text-align: right">0.3176769140606974</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_sod.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">c_sod.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr><tr><td style="text-align: right">c_sod.gate_act.n</td><td style="text-align: right"></td><td style="text-align: right">0.05293248525724957</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_sod.gate_inact.n</td><td style="text-align: right"></td><td style="text-align: right">0.5961207535084602</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_leak.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">l2.v</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">voltage as potential difference between positive and negative pin</td></tr><tr><td style="text-align: right">l2.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">clamp.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.g.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">c_sod.gate_inact.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">c_sod.gate_act.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">c_pot.gate_act.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">clamp.g.p.v</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">0.0</td><td style="text-align: right">membrane potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.i_const</td><td style="text-align: right">current applied to positive pin</td></tr><tr><td style="text-align: right">clamp.i_const</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">40.0</td><td style="text-align: right">current applied to membrane</td></tr><tr><td style="text-align: right">l2.v_init</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-90.0</td><td style="text-align: right">short initial stimulation</td></tr><tr><td style="text-align: right">l2.c</td><td style="text-align: right">&quot;uF/cm2&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">membrane capacitance</td></tr><tr><td style="text-align: right">l2.temp_m</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">6.3</td><td style="text-align: right">constant membrane temperature</td></tr><tr><td style="text-align: right">c_leak.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">0.3</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_leak.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-10.613</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">c_sod.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">120.0</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_sod.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-115.0</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">c_pot.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">36.0</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_pot.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">12.0</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">e_r</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-75.0</td><td style="text-align: right">resting potential</td></tr><tr><td style="text-align: right">l2.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">c_pot.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature to determine reaction coefficient</td></tr><tr><td style="text-align: right">c_sod.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature to determine reaction coefficient</td></tr><tr><td style="text-align: right">c_sod.gate_inact.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">c_sod.gate_act.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">c_pot.gate_act.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">clamp.cur.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">clamp.cur.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.cur.n.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">-clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.n.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">-clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">c_leak.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">c_leak.g_max</td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr></table><h2 id="Monolithic-reference-model"><a class="docs-heading-anchor" href="#Monolithic-reference-model">Monolithic reference model</a><a id="Monolithic-reference-model-1"></a><a class="docs-heading-anchor-permalink" href="#Monolithic-reference-model" title="Permalink"></a></h2><pre><code class="language-modelica">model HHmono &quot;monolithic version of the Hodgkin-Huxley model&quot;
+</math>
+<li>Within group c_pot (prefix _ indicates shortened variable name)
+<ol>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><msup><mrow><mrow><mi>_gate_act.n</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi>_gate_act.phi</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_pot.gate_act.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> -10.0 
+</mn><mo>,</mo><mn> 0.1 
+</mn><mo>,</mo><mn> 100.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
+</mn><mo>&#8722;</mo><mrow><mi>_gate_act.n</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_pot.gate_act.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> 0.0125 
+</mn><mo>,</mo><mn> 125.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mi>_gate_act.n</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
+</math>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mrow><mi>_g</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi>_g_max</mi></mrow><mo>&sdot;</mo><msup><mrow><mi>_gate_act.n</mi></mrow><mn> 4.0 
+</mn></msup></mrow></mrow>
+</math>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mrow><mi>_i</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi>_g</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>&#8722;</mo><mrow><mi>_v_eq</mi></mrow><mo>)</mo></mrow></mrow></mrow>
+</math>
+</ol>
+
+<li>Within group c_sod (prefix _ indicates shortened variable name)
+<ol>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><msup><mrow><mrow><mi>_gate_act.n</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi>_gate_act.phi</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_act.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> -25.0 
+</mn><mo>,</mo><mn> 0.1 
+</mn><mo>,</mo><mn> 1000.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
+</mn><mo>&#8722;</mo><mrow><mi>_gate_act.n</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_act.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> 0.05555555555555555 
+</mn><mo>,</mo><mn> 4000.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mi>_gate_act.n</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
+</math>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><msup><mrow><mrow><mi>_gate_inact.n</mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi>_gate_inact.phi</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_inact.fopen</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> 0.05 
+</mn><mo>,</mo><mn> 70.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
+</mn><mo>&#8722;</mo><mrow><mi>_gate_inact.n</mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mrow><mi>HHmodelica.Components.Gate.c_sod.gate_inact.fclose</mi></mrow><mo>&#8289;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>,</mo><mn> -30.0 
+</mn><mo>,</mo><mn> -0.1 
+</mn><mo>,</mo><mn> 1000.0 
+</mn><mo>)</mo></mrow></mrow><mo>&sdot;</mo><mrow><mi>_gate_inact.n</mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
+</math>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mrow><mi>_g</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi>_g_max</mi></mrow><mo>&sdot;</mo><mrow><msup><mrow><mi>_gate_act.n</mi></mrow><mn> 3.0 
+</mn></msup><mo>&sdot;</mo><mrow><mi>_gate_inact.n</mi></mrow></mrow></mrow></mrow>
+</math>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow><mrow><mi>_i</mi></mrow><mo>&#8801;</mo><mrow><mrow><mi>_g</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> l2.v 
+</mi></mrow><mo>&#8722;</mo><mrow><mi>_v_eq</mi></mrow><mo>)</mo></mrow></mrow></mrow>
+</math>
+</ol>
+
+</ol>
+<table><tr><th style="text-align: right">name</th><th style="text-align: right">unit</th><th style="text-align: right">value</th><th style="text-align: right">label</th></tr><tr><td style="text-align: right">v_m</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">absolute membrane potential (v_in - v_out)</td></tr><tr><td style="text-align: right">c_pot.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">c_pot.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr><tr><td style="text-align: right">c_pot.gate_act.n</td><td style="text-align: right"></td><td style="text-align: right">0.3176769140606974</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_sod.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">c_sod.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr><tr><td style="text-align: right">c_sod.gate_act.n</td><td style="text-align: right"></td><td style="text-align: right">0.05293248525724957</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_sod.gate_inact.n</td><td style="text-align: right"></td><td style="text-align: right">0.5961207535084602</td><td style="text-align: right">ratio of molecules in open conformation</td></tr><tr><td style="text-align: right">c_leak.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">l2.v</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">voltage as potential difference between positive and negative pin</td></tr><tr><td style="text-align: right">l2.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">clamp.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.g.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">c_sod.gate_inact.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">c_sod.gate_act.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">c_pot.gate_act.phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * l2.temp_m)</td><td style="text-align: right">temperature-dependent factor for rate of transfer calculated with Q10 = 3</td></tr><tr><td style="text-align: right">clamp.g.p.v</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">0.0</td><td style="text-align: right">membrane potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.i_const</td><td style="text-align: right">current applied to positive pin</td></tr><tr><td style="text-align: right">clamp.i_const</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">40.0</td><td style="text-align: right">current applied to membrane</td></tr><tr><td style="text-align: right">l2.v_init</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-90.0</td><td style="text-align: right">short initial stimulation</td></tr><tr><td style="text-align: right">l2.c</td><td style="text-align: right">&quot;uF/cm2&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">membrane capacitance</td></tr><tr><td style="text-align: right">l2.temp_m</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">6.3</td><td style="text-align: right">constant membrane temperature</td></tr><tr><td style="text-align: right">c_leak.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">0.3</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_leak.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-10.613</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">c_sod.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">120.0</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_sod.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-115.0</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">c_pot.g_max</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">36.0</td><td style="text-align: right">maximum conductance</td></tr><tr><td style="text-align: right">c_pot.v_eq</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">12.0</td><td style="text-align: right">equilibrium potential (as displacement from resting potential)</td></tr><tr><td style="text-align: right">e_r</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-75.0</td><td style="text-align: right">resting potential</td></tr><tr><td style="text-align: right">l2.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">c_pot.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature to determine reaction coefficient</td></tr><tr><td style="text-align: right">c_sod.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature to determine reaction coefficient</td></tr><tr><td style="text-align: right">c_sod.gate_inact.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">c_sod.gate_act.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">c_pot.gate_act.temp</td><td style="text-align: right">&quot;degC&quot;</td><td style="text-align: right">l2.temp_m</td><td style="text-align: right">membrane temperature</td></tr><tr><td style="text-align: right">clamp.cur.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">outward current flowing through component from negative to positive pin</td></tr><tr><td style="text-align: right">clamp.cur.p.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.cur.n.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">-clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">clamp.n.i</td><td style="text-align: right">&quot;uA/cm2&quot;</td><td style="text-align: right">-clamp.cur.i_const</td><td style="text-align: right">ionic current through membrane</td></tr><tr><td style="text-align: right">c_leak.g</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">c_leak.g_max</td><td style="text-align: right">ion conductance, needs to be defined in subclasses</td></tr></table><h2 id="Monolithic-reference-model"><a class="docs-heading-anchor" href="#Monolithic-reference-model">Monolithic reference model</a><a id="Monolithic-reference-model-1"></a><a class="docs-heading-anchor-permalink" href="#Monolithic-reference-model" title="Permalink"></a></h2><pre><code class="language-modelica">model HHmono &quot;monolithic version of the Hodgkin-Huxley model&quot;
   extends PotentialAdapter;
   parameter Real e_r(unit = &quot;mV&quot;) = -75 &quot;resting potential&quot;;
   Real v_m(unit = &quot;mV&quot;) = e_r - v &quot;absolute membrane potential (v_in - v_out)&quot;;
@@ -251,34 +237,35 @@ equation
     experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
     __OpenModelica_simulationFlags(s = &quot;dassl&quot;),
     __MoST_experiment(variableFilter = &quot;v_m|v|gK|gNa|n|m|h&quot;));
-end HHmono;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/MathML">
+end HHmono;</code></pre><ol>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><msup><mrow><mrow><mi> h 
 </mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mi> alphah 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mi> alphah 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
 </mn><mo>&#8722;</mo><mrow><mi> h 
 </mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mi> betah 
-</mi></mrow><mo>&#8290;</mo><mrow><mi> h 
+</mi></mrow><mo>&sdot;</mo><mrow><mi> h 
 </mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><msup><mrow><mrow><mi> m 
 </mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mi> alpham 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mi> alpham 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
 </mn><mo>&#8722;</mo><mrow><mi> m 
 </mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mi> betam 
-</mi></mrow><mo>&#8290;</mo><mrow><mi> m 
+</mi></mrow><mo>&sdot;</mo><mrow><mi> m 
 </mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><msup><mrow><mrow><mi> n 
 </mi></mrow></mrow><mo>&#8242;</mo></msup><mo>&#8801;</mo><mrow><mrow><mi> phi 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mrow><mi> alphan 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mn> 1.0 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mrow><mi> alphan 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mn> 1.0 
 </mn><mo>&#8722;</mo><mrow><mi> n 
 </mi></mrow><mo>)</mo></mrow></mrow><mo>&#8722;</mo><mrow><mrow><mi> betan 
-</mi></mrow><mo>&#8290;</mo><mrow><mi> n 
+</mi></mrow><mo>&sdot;</mo><mrow><mi> n 
 </mi></mrow></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -300,37 +287,37 @@ end HHmono;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/MathML"
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> Il 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> gbar0 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> VV 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> VV 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> Vl 
 </mi></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> IK 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> gK 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> VV 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> VV 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> VK 
 </mi></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> INa 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> gNa 
-</mi></mrow><mo>&#8290;</mo><mrow><mo>(</mo><mrow><mi> VV 
+</mi></mrow><mo>&sdot;</mo><mrow><mo>(</mo><mrow><mi> VV 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> VNa 
 </mi></mrow><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> gK 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> gbarK 
-</mi></mrow><mo>&#8290;</mo><msup><mrow><mi> n 
+</mi></mrow><mo>&sdot;</mo><msup><mrow><mi> n 
 </mi></mrow><mn> 4.0 
 </mn></msup></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> gNa 
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> gbarNa 
-</mi></mrow><mo>&#8290;</mo><mrow><msup><mrow><mi> m 
+</mi></mrow><mo>&sdot;</mo><mrow><msup><mrow><mi> m 
 </mi></mrow><mn> 3.0 
-</mn></msup><mo>&#8290;</mo><mrow><mi> h 
+</mn></msup><mo>&sdot;</mo><mrow><mi> h 
 </mi></mrow></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -381,58 +368,58 @@ end HHmono;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/MathML"
 </mi></mrow><mo>/</mo><mrow><mo>(</mo><mn> 1.0 
 </mn><mo>+</mo><msup><mi>e</mi><mrow><mrow><mn> 3.0 
 </mn><mo>+</mo><mrow><mn> 0.1 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></mrow></msup><mo>)</mo></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> alphah 
 </mi></mrow><mo>&#8801;</mo><mrow><mn> 0.07000000000000001 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> msecm1 
-</mi></mrow><mo>&#8290;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.05 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> msecm1 
+</mi></mrow><mo>&sdot;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.05 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></msup></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> betam 
 </mi></mrow><mo>&#8801;</mo><mrow><mn> 4.0 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> msecm1 
-</mi></mrow><mo>&#8290;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.05555555555555555 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> msecm1 
+</mi></mrow><mo>&sdot;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.05555555555555555 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></msup></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> alpham 
 </mi></mrow><mo>&#8801;</mo><mrow><mn> 0.1 
-</mn><mo>&#8290;</mo><mrow><mrow><mo>(</mo><mn> 25.0 
+</mn><mo>&sdot;</mo><mrow><mrow><mo>(</mo><mn> 25.0 
 </mn><mo>+</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow><mo>)</mo></mrow><mo>/</mo><mrow><mo>(</mo><mo>&#8722;</mo><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mrow><mn> 2.5 
 </mn><mo>+</mo><mrow><mn> 0.1 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></mrow></msup><mo>)</mo></mrow></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> betan 
 </mi></mrow><mo>&#8801;</mo><mrow><mn> 0.125 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> msecm1 
-</mi></mrow><mo>&#8290;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.0125 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> msecm1 
+</mi></mrow><mo>&sdot;</mo><msup><mi>e</mi><mrow><mrow><mn> 0.0125 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></msup></mrow></mrow></mrow>
 </math>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML">
 <mrow><mrow><mi> alphan 
 </mi></mrow><mo>&#8801;</mo><mrow><mn> 0.01 
-</mn><mo>&#8290;</mo><mrow><mrow><mo>(</mo><mn> 10.0 
+</mn><mo>&sdot;</mo><mrow><mrow><mo>(</mo><mn> 10.0 
 </mn><mo>+</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow><mo>)</mo></mrow><mo>/</mo><mrow><mo>(</mo><mo>&#8722;</mo><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mrow><mn> 1.0 
 </mn><mo>+</mo><mrow><mn> 0.1 
-</mn><mo>&#8290;</mo><mrow><mrow><mi> VV 
+</mn><mo>&sdot;</mo><mrow><mrow><mi> VV 
 </mi></mrow><mo>/</mo><mrow><mi> Vnorm 
 </mi></mrow></mrow></mrow></mrow></mrow></msup><mo>)</mo></mrow></mrow></mrow></mrow>
 </math>
@@ -441,7 +428,9 @@ end HHmono;</code></pre><ol><li><math xmlns="http://www.w3.org/1998/Math/MathML"
 </mi></mrow><mo>&#8801;</mo><mrow><mrow><mi> e_r 
 </mi></mrow><mo>&#8722;</mo><mrow><mi> VV 
 </mi></mrow></mrow></mrow>
-</math></ol><table><tr><th style="text-align: right">name</th><th style="text-align: right">unit</th><th style="text-align: right">value</th><th style="text-align: right">label</th></tr><tr><td style="text-align: right">v_m</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">absolute membrane potential (v_in - v_out)</td></tr><tr><td style="text-align: right">INa</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">IK</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">Il</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">alphan</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of particles from out to in</td></tr><tr><td style="text-align: right">betan</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant from in to out</td></tr><tr><td style="text-align: right">alpham</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of activating molecules from out to in</td></tr><tr><td style="text-align: right">betam</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of activating molecules from in to out</td></tr><tr><td style="text-align: right">alphah</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of inactivating molecules from out to in</td></tr><tr><td style="text-align: right">betah</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of inactivating molecules from in to out</td></tr><tr><td style="text-align: right">gNa</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Sodium conductance</td></tr><tr><td style="text-align: right">gK</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">potassium conductance</td></tr><tr><td style="text-align: right">Iion</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VV</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">n</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of the particles in a certain position</td></tr><tr><td style="text-align: right">m</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of activating molecules on the inside</td></tr><tr><td style="text-align: right">h</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of inactivating molecules on the outside</td></tr><tr><td style="text-align: right">ninf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">minf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">hinf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">taun</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">taum</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">tauh</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">clamp_0no_1yes</td><td style="text-align: right"></td><td style="text-align: right">0.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Vclamp</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">minusI</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right">40.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betah0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.04742587317756678</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alphah0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.07000000000000001</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betam0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">4.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alpham0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.22356372458463</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betan0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.125</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alphan0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.05819767068693265</td><td style="text-align: right">always use v=0 to calculate i.c.</td></tr><tr><td style="text-align: right">msecm1</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">for adding units to alpha and beta variables</td></tr><tr><td style="text-align: right">Vnorm</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">for non-dimensionalizing v in function expressions, i.e. exp(v/Vnorm) replaces exp(v).</td></tr><tr><td style="text-align: right">Vdepolar</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-90.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * Temp)</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Temp</td><td style="text-align: right"></td><td style="text-align: right">6.3</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Vl</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-10.613</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VK</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">12.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VNa</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-115.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">gbar0</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">0.3</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">gbarK</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">36.0</td><td style="text-align: right">max potassium conductance</td></tr><tr><td style="text-align: right">gbarNa</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">120.0</td><td style="text-align: right">max sodium conductance</td></tr><tr><td style="text-align: right">Cm</td><td style="text-align: right">&quot;uF/cm2&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">e_r</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-75.0</td><td style="text-align: right">resting potential</td></tr></table><h2 id="Model-structure"><a class="docs-heading-anchor" href="#Model-structure">Model structure</a><a id="Model-structure-1"></a><a class="docs-heading-anchor-permalink" href="#Model-structure" title="Permalink"></a></h2><p>The structure of the modular implementation follows both the physiology of the squid giant axon and the electrical analogy that Hodgkin and Huxley used to derive the equations.</p><h3 id="Interfaces"><a class="docs-heading-anchor" href="#Interfaces">Interfaces</a><a id="Interfaces-1"></a><a class="docs-heading-anchor-permalink" href="#Interfaces" title="Permalink"></a></h3><p>The lipid bilayer, the ion channels, and the current clamp used for the experiment protocol each are electrical components with a basic interface.</p><pre><code class="language-modelica">connector ElectricalPin &quot;electrical connector for membrane currents&quot;
+</math>
+</ol>
+<table><tr><th style="text-align: right">name</th><th style="text-align: right">unit</th><th style="text-align: right">value</th><th style="text-align: right">label</th></tr><tr><td style="text-align: right">v_m</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right">absolute membrane potential (v_in - v_out)</td></tr><tr><td style="text-align: right">INa</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">IK</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">Il</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Ionic currents</td></tr><tr><td style="text-align: right">alphan</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of particles from out to in</td></tr><tr><td style="text-align: right">betan</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant from in to out</td></tr><tr><td style="text-align: right">alpham</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of activating molecules from out to in</td></tr><tr><td style="text-align: right">betam</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of activating molecules from in to out</td></tr><tr><td style="text-align: right">alphah</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of inactivating molecules from out to in</td></tr><tr><td style="text-align: right">betah</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right"></td><td style="text-align: right">rate constant of inactivating molecules from in to out</td></tr><tr><td style="text-align: right">gNa</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">Sodium conductance</td></tr><tr><td style="text-align: right">gK</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right">potassium conductance</td></tr><tr><td style="text-align: right">Iion</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VV</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">n</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of the particles in a certain position</td></tr><tr><td style="text-align: right">m</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of activating molecules on the inside</td></tr><tr><td style="text-align: right">h</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">proportion of inactivating molecules on the outside</td></tr><tr><td style="text-align: right">ninf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">minf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">hinf</td><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">taun</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">taum</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">tauh</td><td style="text-align: right">&quot;msec&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">clamp_0no_1yes</td><td style="text-align: right"></td><td style="text-align: right">0.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Vclamp</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right"></td><td style="text-align: right"></td></tr><tr><td style="text-align: right">minusI</td><td style="text-align: right">&quot;nA/cm2&quot;</td><td style="text-align: right">40.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betah0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.04742587317756678</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alphah0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.07000000000000001</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betam0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">4.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alpham0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.22356372458463</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">betan0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.125</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">alphan0</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">0.05819767068693265</td><td style="text-align: right">always use v=0 to calculate i.c.</td></tr><tr><td style="text-align: right">msecm1</td><td style="text-align: right">&quot;1/msec&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">for adding units to alpha and beta variables</td></tr><tr><td style="text-align: right">Vnorm</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right">for non-dimensionalizing v in function expressions, i.e. exp(v/Vnorm) replaces exp(v).</td></tr><tr><td style="text-align: right">Vdepolar</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-90.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">phi</td><td style="text-align: right"></td><td style="text-align: right">3.0 ^ (-0.63 + 0.1 * Temp)</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Temp</td><td style="text-align: right"></td><td style="text-align: right">6.3</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">Vl</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-10.613</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VK</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">12.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">VNa</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-115.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">gbar0</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">0.3</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">gbarK</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">36.0</td><td style="text-align: right">max potassium conductance</td></tr><tr><td style="text-align: right">gbarNa</td><td style="text-align: right">&quot;mmho/cm2&quot;</td><td style="text-align: right">120.0</td><td style="text-align: right">max sodium conductance</td></tr><tr><td style="text-align: right">Cm</td><td style="text-align: right">&quot;uF/cm2&quot;</td><td style="text-align: right">1.0</td><td style="text-align: right"></td></tr><tr><td style="text-align: right">e_r</td><td style="text-align: right">&quot;mV&quot;</td><td style="text-align: right">-75.0</td><td style="text-align: right">resting potential</td></tr></table><h2 id="Model-structure"><a class="docs-heading-anchor" href="#Model-structure">Model structure</a><a id="Model-structure-1"></a><a class="docs-heading-anchor-permalink" href="#Model-structure" title="Permalink"></a></h2><p>The structure of the modular implementation follows both the physiology of the squid giant axon and the electrical analogy that Hodgkin and Huxley used to derive the equations.</p><h3 id="Interfaces"><a class="docs-heading-anchor" href="#Interfaces">Interfaces</a><a id="Interfaces-1"></a><a class="docs-heading-anchor-permalink" href="#Interfaces" title="Permalink"></a></h3><p>The lipid bilayer, the ion channels, and the current clamp used for the experiment protocol each are electrical components with a basic interface.</p><pre><code class="language-modelica">connector ElectricalPin &quot;electrical connector for membrane currents&quot;
   flow Real i(unit = &quot;uA/cm2&quot;) &quot;ionic current through membrane&quot;;
   Real v(unit = &quot;mV&quot;) &quot;membrane potential (as displacement from resting potential)&quot;;
 end ElectricalPin;</code></pre><pre><code class="language-modelica">connector PositivePin &quot;electrical pin with filled square icon for visual distinction&quot;
@@ -589,4 +578,4 @@ algorithm
           Hodgkin and Huxley.&lt;/p&gt;
         &lt;/html&gt;
       &quot;));
-end goldmanFit;</code></pre></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Thursday 20 August 2020 12:41">Thursday 20 August 2020</span>. Using Julia version 1.5.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end goldmanFit;</code></pre></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Monday 24 August 2020 10:34">Monday 24 August 2020</span>. Using Julia version 1.5.0.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
