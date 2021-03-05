@@ -9,5 +9,6 @@ makedocs(
 
 deploydocs(
     repo = "github.com/CSchoel/hh-modelica.git",
+    devbranch = "main",
     versions = ["v^", "v#.#", "stable" => "v^"]
 )
