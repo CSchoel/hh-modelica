@@ -8,15 +8,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-[nothing]
+nothing
 
 ### Changed
 
-[nothing]
+nothing
 
 ### Fixed
 
-[nothing]
+nothing
+
+## [1.2.0]
+
+### Added
+
+- support for OpenModelica 1.15, 1.16, and 1.17
+- releases now contain a FMU export of `HHmodular`
+- `Project.toml` and `Manifest.toml` so that dependencies can be installed automatically using `Pkg.instantiate()`
+- `requirements.txt` to install python dependencies for plotting
+- note that indicates that `HHmono` is a 1:1 translation of the JSim implementation
+- this changelog now contains links to compare versions
+- `package.mo` now contains version number
+
+### Changed
+
+- uses MoST.jl version 1.1
+- switched from Travis CI to GitHub Actions
+- `clamp_0no_1yes` in `HHmono` is now a `Boolean`
+
+### Fixed
+
+- the main package now properly states that it requires the MSL version 3.2.3
 
 ## [1.1.0]
 
