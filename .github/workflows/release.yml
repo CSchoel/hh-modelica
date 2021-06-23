@@ -39,6 +39,9 @@ jobs:
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - uses: CSchoel/release-notes-from-changelog@v1
+        with:
+          begin-pattern: /^## \\[${RELEASE_VERSION#v}\\]/
+          link-pattern: ^\\[${RELEASE_VERSION#v}\\]:
       - name: Get cached FMUs
         uses: actions/cache@v2
         with:
