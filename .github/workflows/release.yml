@@ -1,0 +1,54 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Create Release
+
+jobs:
+  build-fmu:
+    name: Build FMU
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install OpenModelica
+        uses: THM-MoTE/setup-openmodelica@v1
+        with:
+          version: 1.17.0
+      - name: Install Modelica standard library
+        run: sudo apt-get install omlib-modelica-3.2.3
+      - name: Run FMU script
+        run: |
+          cd scripts
+          omc dist_fmu.mos
+      - uses: actions/cache@v2
+        with:
+          key: fmu-${{ hashFiles('SHM', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
+          path: out/SHM.SeidelThesis.Examples.FullModel.SeidelThesisFullExample.fmu
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build-fmu]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # source: https://stackoverflow.com/a/58178121
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - uses: CSchoel/release-notes-from-changelog@v1
+      - name: Get cached FMUs
+        uses: actions/cache@v2
+        with:
+          key: fmu-${{ hashFiles('SHM', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
+          path: out/SHM.SeidelThesis.Examples.FullModel.SeidelThesisFullExample.fmu
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided by Actions
+        with:
+          body_path: RELEASE.md
+          draft: true
+          prerelease: false
