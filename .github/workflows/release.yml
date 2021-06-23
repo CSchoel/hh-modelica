@@ -24,8 +24,8 @@ jobs:
           omc dist_fmu.mos
       - uses: actions/cache@v2
         with:
-          key: fmu-${{ hashFiles('SHM', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
-          path: out/SHM.SeidelThesis.Examples.FullModel.SeidelThesisFullExample.fmu
+          key: fmu-${{ hashFiles('HHmodelica', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
+          path: out/HHModelica.CompleteModels.HHmodular.fmu
   release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -42,13 +42,16 @@ jobs:
       - name: Get cached FMUs
         uses: actions/cache@v2
         with:
-          key: fmu-${{ hashFiles('SHM', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
-          path: out/SHM.SeidelThesis.Examples.FullModel.SeidelThesisFullExample.fmu
+          key: fmu-${{ hashFiles('HHmodelica', '.github/workflows/release.yml', 'scripts/dist_fmu.mos') }}
+          path: out/HHModelica.CompleteModels.HHmodular.fmu
+      - name: Rename FMU
+        run: cp out/HHModelica.CompleteModels.HHmodular.fmu "out/HHmodular_linux64_${RELEASE_VERSION}.fmu"
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided by Actions
         with:
           body_path: RELEASE.md
+          files: out/HHmodular_linux64_${RELEASE_VERSION}.fmu
           draft: true
           prerelease: false
