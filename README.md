@@ -1,6 +1,6 @@
 # HH-Modelica
 
-[![Build Status](https://travis-ci.com/CSchoel/hh-modelica.svg?branch=master)](https://travis-ci.com/CSchoel/hh-modelica)
+[![Run tests](https://github.com/CSchoel/hh-modelica/actions/workflows/test.yml/badge.svg)](https://github.com/CSchoel/hh-modelica/actions/workflows/test.yml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3947849.svg)](https://doi.org/10.5281/zenodo.3947849)
 [![BioModels](https://img.shields.io/badge/BioModels-MODEL2103050003-377)](https://www.ebi.ac.uk/biomodels/MODEL2103050003)
 
