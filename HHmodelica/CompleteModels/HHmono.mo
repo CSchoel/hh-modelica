@@ -103,6 +103,11 @@ equation
 annotation(
   experiment(StartTime = 0, StopTime = 30, Tolerance = 1e-6, Interval = 0.01),
   __OpenModelica_simulationFlags(s = "dassl"),
-  __MoST_experiment(variableFilter="v_m|v|gK|gNa|n|m|h")
+  __MoST_experiment(variableFilter="v_m|v|gK|gNa|n|m|h"),
+  documentation(info="
+    This is a 1:1 translation of the JSim implementation
+    available at
+    https://www.physiome.org/jsim/models/webmodel/NSR/Hodgkin_Huxley1952/.
+  ")
 );
 end HHmono;
