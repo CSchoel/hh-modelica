@@ -5,4 +5,4 @@ mkdir("out");
 cd("out");
 loadModel(Modelica, {"3.2.3"});
 loadModel(HHmodelica); getErrorString();
-buildModelFMU(HHModelica.CompleteModels.HHmodular, "2.0", "me_cs"); getErrorString();
+buildModelFMU(HHmodelica.CompleteModels.HHmodular, "2.0", "me_cs"); getErrorString();
