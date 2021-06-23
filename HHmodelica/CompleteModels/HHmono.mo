@@ -25,7 +25,7 @@ model HHmono "monolithic version of the Hodgkin-Huxley model"
   parameter Real minusI(unit = "nA/cm2") = 40;
   input Real Vclamp(unit = "mV");
 
-  parameter Real clamp_0no_1yes = 0;
+  parameter Boolean clamp_0no_1yes = false;
 
   //Variables for all the algebraic equations
   Real INa(unit = "nA/cm2") "Ionic currents";
@@ -57,7 +57,7 @@ protected
   Real tauh(unit="msec");
 
 initial equation
-  VV = if clamp_0no_1yes == 0 then Vdepolar else Vclamp;
+  VV = if clamp_0no_1yes then Vclamp else Vdepolar;
 
   n = alphan0/(alphan0+betan0);
   m = alpham0/(alpham0+betam0);
@@ -90,12 +90,12 @@ equation
   IK      = gK  * (v-VK);
   Il      = gbar0 * (v-Vl);
   Iion    = INa + IK + Il;
-  if (clamp_0no_1yes == 0) then
-    der(VV) = (-minusI-INa-IK-Il)/Cm;
-    v = VV;
-  else
+  if clamp_0no_1yes then
     der(VV) = 0;
     v = Vclamp;
+  else
+    der(VV) = (-minusI-INa-IK-Il)/Cm;
+    v = VV;
   end if;
   der(n) = phi*(alphan*(1-n)-betan*n);
   der(m) = phi*(alpham*(1-m)-betam*m);
