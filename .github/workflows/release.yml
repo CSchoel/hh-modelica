@@ -55,6 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided by Actions
         with:
           body_path: RELEASE.md
-          files: out/HHmodular_linux64_${RELEASE_VERSION}.fmu
+          files: out/HHmodular_linux64_${{ env.RELEASE_VERSION }}.fmu
           draft: true
           prerelease: false
