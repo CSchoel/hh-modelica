@@ -1,6 +1,7 @@
 using ModelicaScriptingTools: withOMC, testmodel, installAndLoad
 using Base.Filesystem
 using Test
+using OMJulia: sendExpression
 
 outdir = joinpath(@__DIR__, "../out")
 modeldir = joinpath(@__DIR__, "..")
@@ -12,6 +13,7 @@ if !ispath(outdir)
 end
 
 withOMC(outdir, modeldir) do omc
+    sendExpression(omc, "setCommandLineOptions(\"-d=newInst,nfAPI\")")
     installAndLoad(omc, "Modelica"; version="3.2.3")
     @testset "Simulate examples" begin
         @testset "HHmono" begin
