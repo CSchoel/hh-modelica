@@ -121,9 +121,9 @@ nothing
 
 [nothing]
 
-[Unreleased]: https://github.com/CSchoel/release-notes-from-changelog/compare/v1.2.0..HEAD
-[1.2.0]: https://github.com/CSchoel/release-notes-from-changelog/compare/v1.1.0..v1.2.0
-[1.1.0]: https://github.com/CSchoel/release-notes-from-changelog/compare/1.0.1..v1.1.0
-[1.0.1]: https://github.com/CSchoel/release-notes-from-changelog/compare/1.0.0..1.0.1
-[1.0.0]: https://github.com/CSchoel/release-notes-from-changelog/compare/0.9.0..1.0.0
-[0.9.0]: https://github.com/CSchoel/release-notes-from-changelog/releases/tag/0.9.0
+[Unreleased]: https://github.com/CSchoel/hh-modelica/compare/v1.2.0..HEAD
+[1.2.0]: https://github.com/CSchoel/hh-modelica/compare/v1.1.0..v1.2.0
+[1.1.0]: https://github.com/CSchoel/hh-modelica/compare/1.0.1..v1.1.0
+[1.0.1]: https://github.com/CSchoel/hh-modelica/compare/1.0.0..1.0.1
+[1.0.0]: https://github.com/CSchoel/hh-modelica/compare/0.9.0..1.0.0
+[0.9.0]: https://github.com/CSchoel/hh-modelica/releases/tag/0.9.0
